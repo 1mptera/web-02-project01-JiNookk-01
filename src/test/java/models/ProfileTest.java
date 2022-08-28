@@ -14,4 +14,12 @@ class ProfileTest {
         assertNull(profile.profileMusic());
     }
 
+    @Test
+    void setProfileMessage() {
+        Profile profile = new Profile();
+
+        profile.setProfileMessage("Hello");
+
+        assertEquals("Hello", profile.profileMessage());
+    }
 }

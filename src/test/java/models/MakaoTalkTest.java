@@ -3,6 +3,8 @@ package models;
 import models.ChattingRoom.ChattingRoom;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,15 +17,15 @@ class MakaoTalkTest {
 
         List<User> users = makaoTalk.users();
 
-        User user1 = new User("ojw0828", "1", "오진욱", new Profile());
+        User user1 = new User(1, "ojw0828", "1", "오진욱");
 
-        makaoTalk.addUsers(user1);
+        makaoTalk.addUser(user1);
 
         assertEquals(user1, users.get(0));
 
-        User user2 = new User("ojs0828", "1", "오진성", new Profile());
+        User user2 = new User(2, "ojs0828", "1", "오진성");
 
-        makaoTalk.addUsers(user2);
+        makaoTalk.addUser(user2);
 
         assertEquals(user2, users.get(1));
     }
@@ -32,7 +34,7 @@ class MakaoTalkTest {
     void currentUser() {
         MakaoTalk makaoTalk = new MakaoTalk();
 
-        User currentUser = new User("ojw0828", "1", "오진욱", new Profile());
+        User currentUser = new User(1, "ojw0828", "1", "오진욱");
 
         makaoTalk.setCurrentUser(currentUser);
 
@@ -47,8 +49,8 @@ class MakaoTalkTest {
         messages.add(new Message("hi","20220828","ojw0828"));
         messages.add(new Message("why","20220828","ojs0828"));
 
-        User currentUser = new User("ojw0828", "7895123", "오진욱", new Profile());
-        User otherUser = new User("ojs0828", "9645123", "오진성", new Profile());
+        User currentUser = new User(1, "ojw0828", "7895123", "오진욱");
+        User otherUser = new User(2, "ojs0828", "9645123", "오진성");
 
         List<User> invitedUsers = new ArrayList<>();
         invitedUsers.add(currentUser);
@@ -57,9 +59,8 @@ class MakaoTalkTest {
         ChattingRoom chattingRoom1 = new ChattingRoom(
                 invitedUsers,
                 currentUser,
-                messages,
-                "title",
-                "previewMessage");
+                messages
+        );
 
         makaoTalk.addChattingRoom(chattingRoom1);
 
@@ -70,10 +71,19 @@ class MakaoTalkTest {
     void friends() {
         MakaoTalk makaoTalk = new MakaoTalk();
 
-        User user = new User("ojw0828", "7895123", "오진욱", new Profile());
+        User user = new User(1, "ojw0828", "7895123", "오진욱");
 
         makaoTalk.addFriend(user);
 
         assertEquals(user, makaoTalk.friends().get(0));
+    }
+
+    @Test
+    void register() throws IOException {
+        MakaoTalk makaotalk = new MakaoTalk();
+
+        makaotalk.register("ojw","ojw123","오진욱");
+
+//        assertEquals(List.of(new User(1, "ojw","ojw123","오진욱")),makaotalk.users());
     }
 }

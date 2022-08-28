@@ -1,7 +1,12 @@
 package models;
 
 import models.ChattingRoom.ChattingRoom;
+import utils.IDGenerator;
+import utils.UserLoader;
+import utils.Parser;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +24,7 @@ public class MakaoTalk {
         this.currentUser = currentUser;
     }
 
-    public void addUsers(User user) {
+    public void addUser(User user) {
         users.add(user);
     }
 
@@ -45,5 +50,25 @@ public class MakaoTalk {
 
     public void loadStatus() {
 
+    }
+
+    public void loadUsers() throws FileNotFoundException {
+        UserLoader userLoader = new UserLoader();
+
+        users = userLoader.loadUser();
+    }
+
+    public void register(String userName, String password, String nickName) throws IOException {
+        Parser parser = new Parser();
+
+        IDGenerator idGenerator = new IDGenerator();
+
+        long id = idGenerator.newUserId();     // TODO -> 나중에 수정해야 함.2
+
+        String line = parser.parseLine(id,userName, password, nickName);
+
+        User user = parser.parseUser(line);
+
+        addUser(user);
     }
 }
