@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="models.MakaoTalkTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2022-08-28T13:15:57" hostname="ojin-ug-ui-MacBookAir.local" time="0.013">
+  <properties/>
+  <testcase name="chattingRooms()" classname="models.MakaoTalkTest" time="0.011"/>
+  <testcase name="friends()" classname="models.MakaoTalkTest" time="0.001"/>
+  <testcase name="users()" classname="models.MakaoTalkTest" time="0.0"/>
+  <testcase name="currentUser()" classname="models.MakaoTalkTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
