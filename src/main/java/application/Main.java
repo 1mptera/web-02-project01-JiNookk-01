@@ -36,10 +36,8 @@ public class Main {
 
     private void inputUserInformation() throws FileNotFoundException {
         makaoTalk = new MakaoTalk();
-//        makaoTalk.loadStatus();
 
         makaoTalk.loadUsers();
-
 
 //        List<Message> messages = new ArrayList<>();
 //        ChattingRoom chattingRoom = new ChattingRoom(
@@ -54,8 +52,6 @@ public class Main {
 //        System.out.println(makaoTalk.chattingRooms());
     }
 
-
     // TODO : 친구 창
-
 
 }
