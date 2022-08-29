@@ -27,6 +27,10 @@ public class Profile {
         return music;
     }
 
+    public void setProfileMessage(String message) {
+        this.message = message;
+    }
+
     @Override
     public boolean equals(Object other) {
         Profile otherProfile = (Profile) other;

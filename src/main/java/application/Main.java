@@ -1,68 +1,61 @@
 package application;
 
+import frames.MainFrame;
+import models.ChattingRoom.ChattingRoom;
+import models.ChattingRoom.SingleChatting;
 import models.MakaoTalk;
+import models.User;
+import utils.MouseEventListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.io.FileNotFoundException;
 
 public class Main {
+    private MakaoTalk makaoTalk;
 
-    private JFrame frame;
-    private JPanel imagePanel;
-    private JPanel contentPanel;
-
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         Main application = new Main();
         application.run();
     }
 
-    private void run() {
-        MakaoTalk makaoTalk = new MakaoTalk();
+    private void run() throws FileNotFoundException {
+        inputUserInformation();
+
+        JFrame mainFrame = new MainFrame(makaoTalk);
+
+        mainFrame.setVisible(true);
+    }
+
+    private void inputUserInformation() throws FileNotFoundException {
+        makaoTalk = new MakaoTalk();
 //        makaoTalk.loadStatus();
 
-        frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(390, 637);
+        makaoTalk.loadUsers();
 
-        initImagePanel();
 
-        initContentPanel();
+//        List<Message> messages = new ArrayList<>();
+//        ChattingRoom chattingRoom = new ChattingRoom(
+//                makaoTalk.users(),
+//                makaoTalk.currentUser(),
+//                messages
+//        );
+//        makaoTalk.addChattingRoom(chattingRoom);
 
-        start();
-
-        frame.setVisible(true);
+        System.out.println(makaoTalk.users());
+//        System.out.println(makaoTalk.friends());
+//        System.out.println(makaoTalk.chattingRooms());
     }
 
-    private void initContentPanel() {
-        contentPanel = new JPanel();
-    }
 
-    private void initImagePanel() {
-        imagePanel = new JPanel();
-        imagePanel.setPreferredSize(new Dimension(100, 0));
-    }
+    // TODO : 친구 창
 
-    private void start() {
-        frame.add(imagePanel, BorderLayout.WEST);
 
-        imagePanel.add(friendsButton());
-        imagePanel.add(chattingButton());
-
-    }
-
-    private JButton friendsButton() {
-        JButton button = new JButton("친구목록");
-        button.addActionListener(event -> {
-
-        });
-        return button;
-    }
-
-    private JButton chattingButton() {
-        JButton button = new JButton();
-        return button;
-    }
 }
