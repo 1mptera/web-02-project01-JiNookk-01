@@ -6,11 +6,12 @@ import javax.swing.JLabel;
 import java.awt.BorderLayout;
 
 public class AlertFrame extends JFrame {
-    public AlertFrame() {
+    public AlertFrame(String alertMessage) {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.add(new JLabel("모든 빈칸을 채워주세요!"), BorderLayout.NORTH);
+        this.add(new JLabel(alertMessage), BorderLayout.NORTH);
         this.add(exitButton());
         this.pack();
+        this.setLocationRelativeTo(null);
     }
 
     private JButton exitButton() {

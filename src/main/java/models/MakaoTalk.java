@@ -12,9 +12,10 @@ import java.util.List;
 
 public class MakaoTalk {
     private List<User> users = new ArrayList<>();
+    private List<ChattingRoom> chattingRooms = new ArrayList<>();
+
     private List<User> friends = new ArrayList<>();
     private User currentUser;
-    private List<ChattingRoom> chattingRooms = new ArrayList<>();
 
     public List<User> users() {
         return users;
@@ -46,10 +47,6 @@ public class MakaoTalk {
 
     public void addFriend(User user) {
         friends.add(user);
-    }
-
-    public void loadStatus() {
-
     }
 
     public void loadUsers() throws FileNotFoundException {

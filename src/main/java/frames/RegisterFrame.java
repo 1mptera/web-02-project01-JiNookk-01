@@ -1,15 +1,14 @@
 package frames;
 
 import models.MakaoTalk;
+import models.User;
 import utils.UserLoader;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import java.awt.Component;
 import java.awt.GridLayout;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class RegisterFrame extends JFrame {
@@ -26,6 +25,7 @@ public class RegisterFrame extends JFrame {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(300, 400);
         this.add(registerPanel());
+        this.setLocationRelativeTo(null);
     }
 
     private JPanel registerPanel() {
@@ -73,10 +73,36 @@ public class RegisterFrame extends JFrame {
             boolean isNickNameBlank = nickName.equals("");
             boolean isUserNameBlank = userName.equals("");
             boolean isPasswordBlank = password.equals("");
+            boolean isUserNameOverlapped = false;
 
-            if (!isNickNameBlank && !isUserNameBlank && !isPasswordBlank) {
+            for (User user : makaoTalk.users()) {
+                if (user.userName().equals(userName)) {
+                    isUserNameOverlapped = true;
+                }
+            }
+
+            if (isNickNameBlank || isUserNameBlank || isPasswordBlank || isUserNameOverlapped) {
+                inputNickNameField.setText("");
+                inputIdField.setText("");
+                inputPasswordField.setText("");
+
+                String alertMessage = "";
+
+                if (isUserNameOverlapped) {
+                    alertMessage = "다른 회원이 사용중인 아이디입니다. 다른 아이디를 입력해주세요!";
+                }
+
+                if (!isUserNameOverlapped) {
+                    alertMessage = "모든 빈칸을 채워주세요!";
+                }
+
+                JFrame alertWindow = new AlertFrame(alertMessage);
+                alertWindow.setVisible(true);
+            }
+
+            if (!isNickNameBlank && !isUserNameBlank && !isPasswordBlank && !isUserNameOverlapped) {
                 try {
-                    makaoTalk.register(nickName, userName, password);
+                    makaoTalk.register(userName, password, nickName);
 
                     UserLoader userLoader = new UserLoader();
 
@@ -87,22 +113,13 @@ public class RegisterFrame extends JFrame {
 
                 this.dispose();
             }
-
-            if (isNickNameBlank || isUserNameBlank || isPasswordBlank) {
-                inputNickNameField.setText("");
-                inputIdField.setText("");
-                inputPasswordField.setText("");
-
-                JFrame alertWindow = new AlertFrame();
-                alertWindow.setVisible(true);
-            }
         });
         return button;
     }
 
     private JButton cancelButton() {
         JButton button = new JButton("취소");
-        button.addActionListener(event ->{
+        button.addActionListener(event -> {
             this.dispose();
         });
         return button;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="models.ChattingRoom.ChattingRoomTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2022-08-29T10:30:15" hostname="ojin-ug-ui-MacBookAir.local" time="0.002">
+<testsuite name="models.ChattingRoom.ChattingRoomTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2022-08-29T13:19:38" hostname="ojin-ug-ui-MacBookAir.local" time="0.002">
   <properties/>
   <testcase name="addMessage()" classname="models.ChattingRoom.ChattingRoomTest" time="0.001"/>
   <testcase name="invite()" classname="models.ChattingRoom.ChattingRoomTest" time="0.0"/>
