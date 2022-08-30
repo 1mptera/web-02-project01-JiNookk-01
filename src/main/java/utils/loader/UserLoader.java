@@ -1,8 +1,9 @@
-package utils;
+package utils.loader;
 
 import models.Profile;
 import models.Relation.UsersRelation;
 import models.User;
+import utils.Parser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,6 +14,22 @@ import java.util.List;
 import java.util.Scanner;
 
 public class UserLoader {
+    public long loadUserId() throws FileNotFoundException {
+        long userId = 0;
+
+        File file = new File("./src/main/resources/DB/user.csv");
+
+        Scanner scanner = new Scanner(file);
+
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+
+            userId = Long.parseLong(line.split(",")[0]);
+        }
+
+        return userId;
+    }
+
     public List<User> loadUser() throws FileNotFoundException {
         List<User> users = new ArrayList<>();
 
@@ -33,22 +50,6 @@ public class UserLoader {
         return users;
     }
 
-    public long loadUserId() throws FileNotFoundException {
-        long userId = 0;
-
-        File file = new File("./src/main/resources/DB/user.csv");
-
-        Scanner scanner = new Scanner(file);
-
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-
-            userId = Long.parseLong(line.split(",")[0]);
-        }
-
-        return userId;
-    }
-
     public void saveUsers(List<User> users) throws IOException {
         FileWriter fileWriter = new FileWriter("./src/main/resources/DB/user.csv");
 
@@ -59,10 +60,6 @@ public class UserLoader {
         }
 
         fileWriter.close();
-    }
-
-    public Profile loadProfile() {
-        return new Profile();
     }
 
     public List<UsersRelation> loadUserRelations() throws FileNotFoundException {

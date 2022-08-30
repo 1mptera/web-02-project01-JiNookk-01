@@ -3,15 +3,16 @@ package panels;
 import models.MakaoTalk;
 import models.Relation.UsersRelation;
 import models.User;
-import utils.MouseEventListener;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class FriendsPanel extends JPanel {
     private MakaoTalk makaoTalk;
-    private final MouseEventListener mouseListener = new MouseEventListener();
     private JPanel friendsContainer;
 
     public FriendsPanel(MakaoTalk makaoTalk) {
@@ -19,7 +20,7 @@ public class FriendsPanel extends JPanel {
 
         this.add(friendsContainer());
 
-        for (UsersRelation usersRelation : makaoTalk.loginUserFriends()) {      //TODO:유저의 친구를 표시하는 메서드
+        for (UsersRelation usersRelation : makaoTalk.relation().loginUserFriends()) {      //TODO:유저의 친구를 표시하는 메서드
             User friend = makaoTalk.user(usersRelation.friendId());
 
             friendsContainer.add(friendPanel(friend));
@@ -28,13 +29,24 @@ public class FriendsPanel extends JPanel {
 
     private JPanel friendsContainer() {
         friendsContainer = new JPanel();
-        friendsContainer.setLayout(new GridLayout(makaoTalk.loginUserFriends().size(), 1));
+        friendsContainer.setLayout(new GridLayout(makaoTalk.relation().loginUserFriends().size(), 1));
         return friendsContainer;
     }
 
     private JPanel friendPanel(User friend) {
         JPanel panel = new JPanel();
-        panel.addMouseListener(mouseListener.openFriendProfileWindow(friend));
+        panel.addMouseListener(
+                new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        JFrame friendProfileWindow = new JFrame(friend.name());
+                        friendProfileWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                        friendProfileWindow.setSize(400, 300);
+
+                        friendProfileWindow.setVisible(true);
+                    }
+                }
+        );
         panel.add(friendProfilePicturePanel(friend));
         panel.add(friendDescriptionPanel(friend));
         return panel;
@@ -52,5 +64,4 @@ public class FriendsPanel extends JPanel {
         panel.add(new JLabel(friend.profile().profileMessage()));
         return panel;
     }
-
 }

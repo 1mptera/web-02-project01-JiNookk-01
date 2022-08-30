@@ -25,12 +25,12 @@ class OverlapValidatorTest {
 
         makaoTalk.login(1);
 
-        makaoTalk.addUsersRelation(new UsersRelation(1,4));
-        makaoTalk.addUsersRelation(new UsersRelation(2,3));
-        makaoTalk.addUsersRelation(new UsersRelation(1,2));
-        makaoTalk.addUsersRelation(new UsersRelation(3,1));
-        makaoTalk.addUsersRelation(new UsersRelation(1,6));
-        makaoTalk.addUsersRelation(new UsersRelation(2,5));
+        makaoTalk.relation().addUsersRelation(new UsersRelation(1,4));
+        makaoTalk.relation().addUsersRelation(new UsersRelation(2,3));
+        makaoTalk.relation().addUsersRelation(new UsersRelation(1,2));
+        makaoTalk.relation().addUsersRelation(new UsersRelation(3,1));
+        makaoTalk.relation().addUsersRelation(new UsersRelation(1,6));
+        makaoTalk.relation().addUsersRelation(new UsersRelation(2,5));
 
         assertTrue(overlapValidator.
                 validateUserRelations(user2, makaoTalk));

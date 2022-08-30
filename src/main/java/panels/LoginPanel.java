@@ -88,8 +88,6 @@ public class LoginPanel extends JPanel {
         button.addActionListener(event -> {
             JFrame registerWindow = new RegisterFrame(makaoTalk);
 
-            showAlert("회원가입이 완료되었습니다!");
-
             registerWindow.setVisible(true);
         });
         return button;

@@ -1,32 +1,20 @@
 package application;
 
 import frames.MainFrame;
-import models.ChattingRoom.ChattingRoom;
-import models.ChattingRoom.SingleChatting;
 import models.MakaoTalk;
-import models.User;
-import utils.MouseEventListener;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Main {
     private MakaoTalk makaoTalk;
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
         Main application = new Main();
         application.run();
     }
 
-    private void run() throws FileNotFoundException {
+    private void run() throws IOException {
         inputUserInformation();
 
         JFrame mainFrame = new MainFrame(makaoTalk);
@@ -34,23 +22,26 @@ public class Main {
         mainFrame.setVisible(true);
     }
 
-    private void inputUserInformation() throws FileNotFoundException {
+    private void inputUserInformation() throws IOException {
         makaoTalk = new MakaoTalk();
 
         makaoTalk.loadUsers();
-
-        makaoTalk.loadUserRelations();
-
-//        List<Message> messages = new ArrayList<>();
-//        ChattingRoom chattingRoom = new ChattingRoom(
-//                makaoTalk.users(),
-//                makaoTalk.currentUser(),
-//                messages
-//        );
-//        makaoTalk.addChattingRoom(chattingRoom);
-
         System.out.println(makaoTalk.users());
-        System.out.println(makaoTalk.usersRelations());
+
+        makaoTalk.relation().loadUserRelations();
+        System.out.println(makaoTalk.relation().usersRelations());
+
+        makaoTalk.relation().loadUserChattingRoomRelation();
+        System.out.println(makaoTalk.relation().userChattingRoomRelations());
+
+        makaoTalk.relation().loadChattingRoomMessageRelation();
+        System.out.println(makaoTalk.relation().chattingRoomMessageRelations());
+
+        makaoTalk.loadChattingRooms();
+        System.out.println(makaoTalk.chattingRooms());
+
+        makaoTalk.loadMessages();
+
 //        System.out.println(makaoTalk.friends());
 //        System.out.println(makaoTalk.chattingRooms());
     }

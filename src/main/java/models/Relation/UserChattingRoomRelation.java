@@ -19,4 +19,27 @@ public class UserChattingRoomRelation {
     public long chattingRoomId() {
         return chattingRoomId;
     }
+
+    public String toCsvRow() {
+        return userId + "," + chattingRoomId;
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        UserChattingRoomRelation otherUserChattingRoomRelation =
+                (UserChattingRoomRelation) other;
+
+        return this.userId == otherUserChattingRoomRelation.userId &&
+                this.chattingRoomId == otherUserChattingRoomRelation.chattingRoomId;
+    }
+
+    @Override
+    public String toString() {
+        return "유저아이디: " + userId + " - 채팅방 아이디: " + chattingRoomId;
+    }
 }

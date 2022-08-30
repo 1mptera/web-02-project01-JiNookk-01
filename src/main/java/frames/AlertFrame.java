@@ -12,6 +12,7 @@ public class AlertFrame extends JFrame {
         this.add(exitButton());
         this.pack();
         this.setLocationRelativeTo(null);
+        this.setVisible(true);
     }
 
     private JButton exitButton() {

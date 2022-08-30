@@ -1,7 +1,9 @@
 package frames;
 
 import models.ChattingRoom.ChattingRoom;
+import models.MakaoTalk;
 import models.Message;
+import utils.loader.MessageLoader;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -9,25 +11,30 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.GridLayout;
+import java.io.IOException;
 
 public class ChattingRoomWindow extends JFrame {
+    private MakaoTalk makaoTalk;
     private final ChattingRoom chattingRoom;
     private JTextField inputMessageTextField;
     private JPanel messagesPanel;
 
-    public ChattingRoomWindow(ChattingRoom chattingRoom) {
+    public ChattingRoomWindow(MakaoTalk makaoTalk, ChattingRoom chattingRoom) {
+        this.makaoTalk = makaoTalk;
         this.chattingRoom = chattingRoom;
 
         this.setLayout(new BorderLayout());
         this.setTitle(chattingRoom.title());
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setSize(400, 300);
+        this.setSize(400, 800);
 
         this.add(chattingRoomStatusPanel(), BorderLayout.NORTH);
         this.add(messagesPanel());
         this.add(inputMessagePanel(), BorderLayout.SOUTH);
+
+        showMessagesPanel();
+        showMessages();
     }
 
     private JPanel chattingRoomStatusPanel() {
@@ -81,24 +88,52 @@ public class ChattingRoomWindow extends JFrame {
     private JButton transferMessageButton() {
         JButton button = new JButton("전송");
         button.addActionListener(event -> {
-            String newMessage = inputMessageTextField.getText();
+            MessageLoader messageLoader = new MessageLoader();
+            String content = inputMessageTextField.getText();
+            inputMessageTextField.setText("");
 
-            chattingRoom.currentUser().
-                    sendMessageToChattingRoom(newMessage, chattingRoom);
+            if (!content.equals("")) {
+                try {
+                    Message newMessage = makaoTalk.user(makaoTalk.loginUserId())
+                            .sendMessageToSystem(content);
 
-            messagesPanel.setLayout(new GridLayout(chattingRoom.messages().size(), 1));
+                    makaoTalk.newMessage(newMessage, chattingRoom);
 
-            messagesPanel.removeAll();
+                    messageLoader.saveMessage(makaoTalk.messages());
 
-            for (Message message : chattingRoom.messages()) {
-                messagesPanel.add(messagePanel(message));
+                    messageLoader.saveChattingRoomMessageRelations(
+                            makaoTalk.relation().chattingRoomMessageRelations());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                showMessages();
+                this.setVisible(true);
             }
-
-            messagesPanel.setVisible(false);
-            messagesPanel.setVisible(true);
-            this.setVisible(true);
         });
         return button;
+    }
+
+    private void showMessages() {
+        messagesPanel.removeAll();
+        messagesPanel.add(messagesContainer());
+    }
+
+    private JPanel messagesContainer() {
+        JPanel panel = new JPanel();
+        panel.removeAll();
+        panel.setLayout(new GridLayout(makaoTalk.currentChattingRoomMessages().size(), 1));
+        for (Message message : makaoTalk.currentChattingRoomMessages()) {
+            panel.add(messagePanel(message));
+        }
+
+        showMessagesPanel();
+        return panel;
+    }
+
+    private void showMessagesPanel() {
+        messagesPanel.setVisible(false);
+        messagesPanel.setVisible(true);
     }
 
     private JPanel messagePanel(Message message) {
@@ -117,7 +152,7 @@ public class ChattingRoomWindow extends JFrame {
     }
 
     private JLabel userNameLabel(Message message) {
-        String userName = chattingRoom.messageOwnerName(message);
+        String userName = makaoTalk.messageOwnerName(message);
         return new JLabel(userName);
     }
 
