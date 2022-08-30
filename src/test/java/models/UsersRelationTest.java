@@ -16,7 +16,7 @@ class UsersRelationTest {
         UsersRelation usersRelation = new UsersRelation(myId,otherId);
 
         assertEquals(1, usersRelation.myId());
-        assertEquals(5, usersRelation.otherId());
+        assertEquals(5, usersRelation.friendId());
     }
 
     @Test
@@ -33,5 +33,14 @@ class UsersRelationTest {
 
 
 //        assertEquals(List.of(3,5),userRelations.findFriendsId(1));
+    }
+
+    @Test
+    void toCsvRow() {
+        UsersRelation usersRelation = new UsersRelation(1, 2);
+
+        String line = usersRelation.toCsvRow();
+
+        assertEquals("1,2", line);
     }
 }

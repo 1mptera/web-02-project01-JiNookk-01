@@ -4,7 +4,6 @@ import models.MakaoTalk;
 import panels.ImagePanel;
 import panels.LoginPanel;
 
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
@@ -21,6 +20,7 @@ public class MainFrame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(490, 800);
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
 
         initImagePanel();
 

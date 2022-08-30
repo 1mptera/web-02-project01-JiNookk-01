@@ -39,6 +39,8 @@ public class Main {
 
         makaoTalk.loadUsers();
 
+        makaoTalk.loadUserRelations();
+
 //        List<Message> messages = new ArrayList<>();
 //        ChattingRoom chattingRoom = new ChattingRoom(
 //                makaoTalk.users(),
@@ -48,10 +50,10 @@ public class Main {
 //        makaoTalk.addChattingRoom(chattingRoom);
 
         System.out.println(makaoTalk.users());
+        System.out.println(makaoTalk.usersRelations());
 //        System.out.println(makaoTalk.friends());
 //        System.out.println(makaoTalk.chattingRooms());
     }
 
     // TODO : 친구 창
-
 }

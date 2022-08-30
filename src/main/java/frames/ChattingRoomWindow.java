@@ -28,7 +28,6 @@ public class ChattingRoomWindow extends JFrame {
         this.add(chattingRoomStatusPanel(), BorderLayout.NORTH);
         this.add(messagesPanel());
         this.add(inputMessagePanel(), BorderLayout.SOUTH);
-
     }
 
     private JPanel chattingRoomStatusPanel() {

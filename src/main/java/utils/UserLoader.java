@@ -1,6 +1,7 @@
 package utils;
 
 import models.Profile;
+import models.Relation.UsersRelation;
 import models.User;
 
 import java.io.File;
@@ -61,6 +62,38 @@ public class UserLoader {
     }
 
     public Profile loadProfile() {
-        return null;
+        return new Profile();
+    }
+
+    public List<UsersRelation> loadUserRelations() throws FileNotFoundException {
+        List<UsersRelation> userRelations = new ArrayList<>();
+
+        File file = new File("./src/main/resources/relations/usersRelations.csv");
+
+        Scanner scanner = new Scanner(file);
+
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+
+            Parser parser = new Parser();
+
+            UsersRelation usersRelation = parser.parseUserRelation(line);
+
+            userRelations.add(usersRelation);
+        }
+
+        return userRelations;
+    }
+
+    public void saveUsersRelations(List<UsersRelation> usersRelations) throws IOException {
+        FileWriter fileWriter = new FileWriter("./src/main/resources/relations/usersRelations.csv");
+
+        for (UsersRelation userRelation : usersRelations) {
+            String line = userRelation.toCsvRow();
+
+            fileWriter.write(line + "\n");
+        }
+
+        fileWriter.close();
     }
 }

@@ -14,8 +14,8 @@ class SingleChattingTest {
     void creation() {
         List<Message> messages = new ArrayList<>();
 
-        User currentUser = new User(1, "ojw0828", "7895123", "오진욱");
-        User otherUser = new User(2, "ojs0828", "9645123", "오진성");
+        User currentUser = new User(1, "ojw0828", "7895123", "오진욱","01085568965" );
+        User otherUser = new User(2, "ojs0828", "9645123", "오진성", "01052398955");
 
         List<User> invitedUsers = new ArrayList<>();
         invitedUsers.add(currentUser);
@@ -39,8 +39,8 @@ class SingleChattingTest {
     void setTitle() {
         List<Message> messages = new ArrayList<>();
 
-        User currentUser = new User(1, "ojw0828", "7895123", "오진욱");
-        User otherUser = new User(2, "ojs0828", "9645123", "오진성");
+        User currentUser = new User(1, "ojw0828", "7895123", "오진욱","01085568965" );
+        User otherUser = new User(2, "ojs0828", "9645123", "오진성", "01052398955");
 
         List<User> invitedUsers = new ArrayList<>();
         invitedUsers.add(currentUser);
@@ -55,8 +55,8 @@ class SingleChattingTest {
     void otherUser() {
         List<Message> messages = new ArrayList<>();
 
-        User currentUser = new User(1, "ojw0828", "7895123", "오진욱");
-        User otherUser = new User(2, "ojs0828", "9645123", "오진성");
+        User currentUser = new User(1, "ojw0828", "7895123", "오진욱","01085568965" );
+        User otherUser = new User(2, "ojs0828", "9645123", "오진성", "01052398955");
 
         List<User> invitedUsers = new ArrayList<>();
         invitedUsers.add(currentUser);
