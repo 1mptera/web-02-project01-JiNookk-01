@@ -1,6 +1,6 @@
 package models;
 
-// TODO : ID, 비밀 번호, 이름, 프로필, 친구목록 -> 엔티티
+// TODO : ID, 비밀 번호, 이름, 프로필, 친구목록, 전화번호? -> 엔티티
 
 import models.ChattingRoom.ChattingRoom;
 import utils.UserLoader;
@@ -13,15 +13,21 @@ public class User {
     private String passWord;
     private String nickName;
     private Profile profile;
+    private String phoneNumber;
 
-    public User(long id, String userName, String passWord, String nickName) {
+    public User(long id, String userName, String passWord, String nickName, String phoneNumber) {
         UserLoader userLoader = new UserLoader();
 
         this.id = id;
         this.userName = userName;
         this.passWord = passWord;
         this.nickName = nickName;
+        this.phoneNumber = phoneNumber;
         this.profile = userLoader.loadProfile();
+    }
+
+    public long id() {
+        return id;
     }
 
     public String userName() {
@@ -34,6 +40,10 @@ public class User {
 
     public String name() {
         return nickName;
+    }
+
+    public String phoneNumber() {
+        return phoneNumber;
     }
 
     public void sendMessageToChattingRoom(String content, ChattingRoom chattingRoom) {
@@ -52,7 +62,7 @@ public class User {
     }
 
     public String toCsvRow() {
-        return id + "," + userName + "," + passWord + "," + nickName;
+        return id + "," + userName + "," + passWord + "," + nickName + "," + phoneNumber;
     }
 
     @Override

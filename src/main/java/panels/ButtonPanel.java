@@ -1,17 +1,20 @@
 package panels;
 
+import frames.FriendAddFrame;
 import models.ChattingRoom.ChattingRoom;
 import models.ChattingRoom.SingleChatting;
 import models.MakaoTalk;
+import models.Relation.UsersRelation;
 import models.User;
 import utils.MouseEventListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
@@ -36,63 +39,46 @@ public class ButtonPanel extends JPanel {
         this.add(logoutButton());
     }
 
-    private JButton logoutButton() {
-        JButton button = new JButton("로그아웃");
-        button.addActionListener(event -> {
-            imagePanel.removeAll();
-            contentPanel.removeAll();
-
-            JPanel loginPanel = new LoginPanel(makaoTalk, imagePanel, contentPanel);
-            contentPanel.add(loginPanel);
-            contentPanel.setOpaque(false);
-            
-            imagePanel.add(contentPanel);
-            showImagePanel();
-        });
-        return button;
-    }
-
-    private JButton settingButton() {
-        JButton button = new JButton("사용자 설정");
-        return button;
-    }
-
     private JButton friendsButton() {
         JButton button = new JButton("친구목록");
         button.addActionListener(event -> {
             contentPanel.removeAll();
+            contentPanel.setLayout(new BorderLayout());
+            contentPanel.add(friendsToolPanel(), BorderLayout.NORTH);
 
-            for (User friend : makaoTalk.friends()) {
-                contentPanel.add(friendsPanel(friend));
-            }
-
+            JPanel friendsPanel = new FriendsPanel(makaoTalk);
+            contentPanel.add(friendsPanel);
             showImagePanel();
         });
         return button;
     }
 
-    private JPanel friendsPanel(User friend) {
+    private JPanel friendsToolPanel() {
         JPanel panel = new JPanel();
-        panel.addMouseListener(mouseListener.openFriendProfileWindow(friend));
-        panel.add(friendProfilePicturePanel(friend));
-        panel.add(friendDescriptionPanel(friend));
+        panel.setBackground(Color.green);
+        panel.add(friendFindButton());
+        panel.add(addFriendButton());
         return panel;
     }
 
-    private JPanel friendProfilePicturePanel(User friend) {
-        return new JPanel();
+    private JButton friendFindButton() {
+        JButton button = new JButton("찾기");
+        return button;
     }
 
-    private JPanel friendDescriptionPanel(User friend) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(2, 1));
-        panel.add(new JLabel(friend.name()));
-        panel.add(new JLabel(friend.profile().profileMessage()));
-        return panel;
+    private JButton addFriendButton() {
+        JButton button = new JButton("친구 추가");
+        button.addActionListener(event -> {
+            JFrame friendAddWindow = new FriendAddFrame(makaoTalk);
+
+            friendAddWindow.setVisible(true);
+        });
+        return button;
     }
+
+
 
     // TODO : 채팅 창
-
     private JButton chattingButton() {
         JButton button = new JButton("채팅목록");
         button.addActionListener(event -> {
@@ -137,6 +123,27 @@ public class ButtonPanel extends JPanel {
 
     private JPanel chattingRoomProfilePicturePanel(ChattingRoom chattingRoom) {
         return new JPanel();
+    }
+
+    private JButton logoutButton() {
+        JButton button = new JButton("로그아웃");
+        button.addActionListener(event -> {
+            imagePanel.removeAll();
+            contentPanel.removeAll();
+
+            JPanel loginPanel = new LoginPanel(makaoTalk, imagePanel, contentPanel);
+            contentPanel.add(loginPanel);
+            contentPanel.setOpaque(false);
+
+            imagePanel.add(contentPanel);
+            showImagePanel();
+        });
+        return button;
+    }
+
+    private JButton settingButton() {
+        JButton button = new JButton("사용자 설정");
+        return button;
     }
 
     private void showImagePanel() {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="models.ChattingRoom.SingleChattingTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2022-08-29T13:19:38" hostname="ojin-ug-ui-MacBookAir.local" time="0.002">
+<testsuite name="models.ChattingRoom.SingleChattingTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2022-08-30T05:07:43" hostname="ojinugucBookAir" time="0.001">
   <properties/>
-  <testcase name="otherUser()" classname="models.ChattingRoom.SingleChattingTest" time="0.001"/>
+  <testcase name="otherUser()" classname="models.ChattingRoom.SingleChattingTest" time="0.0"/>
   <testcase name="setTitle()" classname="models.ChattingRoom.SingleChattingTest" time="0.001"/>
   <testcase name="creation()" classname="models.ChattingRoom.SingleChattingTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>

@@ -12,11 +12,12 @@ import java.awt.GridLayout;
 import java.io.IOException;
 
 public class RegisterFrame extends JFrame {
+    private final MakaoTalk makaoTalk;
 
     private JTextField inputIdField;
     private JTextField inputPasswordField;
-    private MakaoTalk makaoTalk;
     private JTextField inputNickNameField;
+    private JTextField inputPhoneNumberField;
 
     public RegisterFrame(MakaoTalk makaoTalk) {
         this.makaoTalk = makaoTalk;
@@ -30,10 +31,11 @@ public class RegisterFrame extends JFrame {
 
     private JPanel registerPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(4, 1));
+        panel.setLayout(new GridLayout(5, 1));
         panel.add(inputNickNameField());
         panel.add(inputIdField());
         panel.add(inputPasswordField());
+        panel.add(inputPhoneNumberField());
         panel.add(registerButtonsPanel());
         return panel;
     }
@@ -56,6 +58,12 @@ public class RegisterFrame extends JFrame {
         return inputPasswordField;
     }
 
+    private JTextField inputPhoneNumberField() {
+        inputPhoneNumberField = new JTextField(10);
+        inputPhoneNumberField.setText("전화번호를 입력하세요");
+        return inputPhoneNumberField;
+    }
+
     private JPanel registerButtonsPanel() {
         JPanel panel = new JPanel();
         panel.add(registerButton());
@@ -69,10 +77,12 @@ public class RegisterFrame extends JFrame {
             String nickName = inputNickNameField.getText();
             String userName = inputIdField.getText();
             String password = inputPasswordField.getText();
+            String phoneNumber = inputPhoneNumberField.getText();
 
             boolean isNickNameBlank = nickName.equals("");
             boolean isUserNameBlank = userName.equals("");
             boolean isPasswordBlank = password.equals("");
+            boolean isPhoneNumberBlank = phoneNumber.equals("");
             boolean isUserNameOverlapped = false;
 
             for (User user : makaoTalk.users()) {
@@ -81,10 +91,12 @@ public class RegisterFrame extends JFrame {
                 }
             }
 
-            if (isNickNameBlank || isUserNameBlank || isPasswordBlank || isUserNameOverlapped) {
+            if (isNickNameBlank || isUserNameBlank ||
+                    isPasswordBlank || isPhoneNumberBlank || isUserNameOverlapped) {
                 inputNickNameField.setText("");
                 inputIdField.setText("");
                 inputPasswordField.setText("");
+                inputPhoneNumberField.setText("");
 
                 String alertMessage = "";
 
@@ -100,9 +112,10 @@ public class RegisterFrame extends JFrame {
                 alertWindow.setVisible(true);
             }
 
-            if (!isNickNameBlank && !isUserNameBlank && !isPasswordBlank && !isUserNameOverlapped) {
+            if (!isNickNameBlank && !isUserNameBlank && !isPasswordBlank &&
+                    !isPhoneNumberBlank && !isUserNameOverlapped) {
                 try {
-                    makaoTalk.register(userName, password, nickName);
+                    makaoTalk.register(userName, password, nickName, phoneNumber);
 
                     UserLoader userLoader = new UserLoader();
 

@@ -14,8 +14,8 @@ class ChattingRoomTest {
     void chattingRoom() {
         List<Message> messages = new ArrayList<>();
 
-        User currentUser = new User(1, "ojw0828", "7895123", "오진욱");
-        User otherUser = new User(2, "ojs0828", "9645123", "오진성");
+        User currentUser = new User(1, "ojw0828", "7895123", "오진욱", "01085568965");
+        User otherUser = new User(2, "ojs0828", "9645123", "오진성", "01076308965");
 
         List<User> invitedUsers = new ArrayList<>();
 
@@ -40,7 +40,7 @@ class ChattingRoomTest {
         assertEquals("why", chattingRoom.previewMessage());
         assertEquals("single", chattingRoom.type());
 
-        chattingRoom.invite(new User(3, "bjh0828","123","배준형"));
+        chattingRoom.invite(new User(3, "bjh0828", "123", "배준형", "01032921537"));
 
         assertEquals("multi", chattingRoom.type());
     }
@@ -62,15 +62,15 @@ class ChattingRoomTest {
     @Test
     void defaultTitle() {
         List<User> invited = new ArrayList<>();
-        User jinwook = new User(1, "ojw0828", "7895123", "오진욱");
+        User jinwook = new User(1, "ojw0828", "7895123", "오진욱", "01085568965");
         invited.add(jinwook);
-        invited.add(new User(2, "ojs0828", "9645123", "오진성"));
+        invited.add(new User(2, "ojs0828", "9645123", "오진성", "01076308965"));
 
         ChattingRoom chattingRoom = new ChattingRoom(invited, jinwook, new ArrayList<>());
 
         assertEquals("오진성", chattingRoom.updateTitle());
 
-        chattingRoom.invite(new User(3, "bjh0828", "9645114", "배준형"));
+        chattingRoom.invite(new User(3, "bjh0828", "9645114", "배준형", "01032921537"));
 
         assertEquals("오진욱, 오진성, 배준형", chattingRoom.updateTitle());
     }
@@ -78,14 +78,14 @@ class ChattingRoomTest {
     @Test
     void invite() {
         List<User> invited = new ArrayList<>();
-        User jinwook = new User(1, "ojw0828", "7895123", "오진욱");
+        User jinwook = new User(1, "ojw0828", "7895123", "오진욱", "01085568965");
         invited.add(jinwook);
 
         ChattingRoom chattingRoom = new ChattingRoom(invited, jinwook, new ArrayList<>());
 
         assertEquals(List.of(jinwook), chattingRoom.invitedUsers());
 
-        User jinseong = new User(2, "ojs0828", "9645123", "오진성");
+        User jinseong = new User(2, "ojs0828", "9645123", "오진성", "01076308965");
         chattingRoom.invite(jinseong);
 
         assertEquals(List.of(jinwook, jinseong), chattingRoom.invitedUsers());
@@ -97,8 +97,8 @@ class ChattingRoomTest {
         Message message1 = new Message("hi", "20220828", "ojw0828");
         Message message2 = new Message("why", "20220828", "ojs0828");
 
-        User currentUser = new User(1, "ojw0828", "7895123", "오진욱");
-        User otherUser = new User(2, "ojs0828", "9645123", "오진성");
+        User currentUser = new User(1, "ojw0828", "7895123", "오진욱", "01085568965");
+        User otherUser = new User(2, "ojs0828", "9645123", "오진성", "01076308965");
 
         List<User> invitedUsers = new ArrayList<>();
         invitedUsers.add(currentUser);

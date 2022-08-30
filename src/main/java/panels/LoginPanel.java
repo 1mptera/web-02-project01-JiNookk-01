@@ -68,8 +68,8 @@ public class LoginPanel extends JPanel {
                 }
 
                 if (passwordCorrect) {
-                    loginPage();
-//                    makaoTalk.loginPage(loginUser);
+                    makaoTalk.login(loginUser.id());
+                    mainPage();
                 }
             } catch (ArrayIndexOutOfBoundsException exception) {
                 showAlert("아이디를 확인해주세요!");
@@ -95,7 +95,7 @@ public class LoginPanel extends JPanel {
         return button;
     }
 
-    private void loginPage() {
+    private void mainPage() {
         contentPanel.removeAll();
         contentPanel.setOpaque(true);
         contentPanel.setBackground(Color.DARK_GRAY);

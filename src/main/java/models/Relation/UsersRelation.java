@@ -5,18 +5,40 @@ package models.Relation;
 
 public class UsersRelation {
     private long myId;
-    private long otherId;
+    private long friendId;
 
-    public UsersRelation(long myId, long otherId) {
+    public UsersRelation(long myId, long friendId) {
         this.myId = myId;
-        this.otherId = otherId;
+        this.friendId = friendId;
     }
 
     public long myId() {
         return myId;
     }
 
-    public long otherId() {
-        return otherId;
+    public long friendId() {
+        return friendId;
+    }
+
+    public String toCsvRow() {
+        return myId + "," + friendId;
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        UsersRelation otherUserRelation = (UsersRelation) other;
+
+        return this.myId == otherUserRelation.myId &&
+                this.friendId == otherUserRelation.friendId;
+    }
+
+    @Override
+    public String toString() {
+        return myId + " - " + friendId;
     }
 }
