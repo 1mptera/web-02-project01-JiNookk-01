@@ -44,9 +44,10 @@ public class UserLoader {
 
             User user = parser.parseUser(line);
 
-            users.add(user);
+            if (!user.deleted()) {
+                users.add(user);
+            }
         }
-
         return users;
     }
 

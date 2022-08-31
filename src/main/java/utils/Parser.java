@@ -21,12 +21,15 @@ public class Parser {
         String password = words[2];
         String nickname = words[3];
         String phoneNumber = words[4];
+        boolean deleted = Boolean.parseBoolean(words[5]);
 
-        return new User(id, username, password, nickname, phoneNumber);
+        User user = new User(id, username, password, nickname, phoneNumber);
+        user.setDeleted(deleted);
+        return user;
     }
 
-    public String parseLine(long id, String userName, String password, String nickName, String phoneNumber) {
-        return id + "," + userName + "," + password + "," + nickName + "," + phoneNumber;
+    public String parseLine(long id, String userName, String password, String nickName, String phoneNumber, boolean deleted) {
+        return id + "," + userName + "," + password + "," + nickName + "," + phoneNumber + "," + deleted;
     }
 
     public UsersRelation parseUserRelation(String line) {
