@@ -16,10 +16,9 @@ public class User {
     private String nickName;
     private Profile profile;
     private String phoneNumber;
+    private boolean deleted = false;
 
     public User(long id, String userName, String passWord, String nickName, String phoneNumber) {
-        UserLoader userLoader = new UserLoader();
-
         this.id = id;
         this.userName = userName;
         this.passWord = passWord;
@@ -44,6 +43,26 @@ public class User {
         return nickName;
     }
 
+    public boolean deleted() {
+        return deleted;
+    }
+
+    public void updateNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public void updateUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void updatePassWord(String password) {
+        this.passWord = password;
+    }
+
+    public void updatePhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     public String phoneNumber() {
         return phoneNumber;
     }
@@ -63,7 +82,15 @@ public class User {
     }
 
     public String toCsvRow() {
-        return id + "," + userName + "," + passWord + "," + nickName + "," + phoneNumber;
+        return id + "," + userName + "," + passWord + "," + nickName + "," + phoneNumber + "," +deleted;
+    }
+
+    public void deleteID() {
+        deleted = true;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     @Override

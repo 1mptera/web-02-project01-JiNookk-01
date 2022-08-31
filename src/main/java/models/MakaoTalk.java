@@ -74,7 +74,9 @@ public class MakaoTalk {
 
         long id = idGenerator.newUserId();     // TODO -> 나중에 수정해야 함.
 
-        String line = parser.parseLine(id, userName, password, nickName, phoneNumber);
+        boolean deleted = false;
+
+        String line = parser.parseLine(id, userName, password, nickName, phoneNumber, deleted);
 
         User user = parser.parseUser(line);
 

@@ -31,7 +31,7 @@ class ParserTest {
     void parseLine() {
         Parser parser = new Parser();
 
-        String line = parser.parseLine(1, "ojw", "ojw123", "오진욱", "01085568965");
+        String line = parser.parseLine(1, "ojw", "ojw123", "오진욱", "01085568965", false);
 
         assertEquals("1,ojw,ojw123,오진욱,01085568965", line);
     }

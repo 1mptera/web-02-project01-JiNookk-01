@@ -55,16 +55,12 @@ public class LoginPanel extends JPanel {
             String password = inputPasswordField.getText();
 
             try {
-                User loginUser = makaoTalk.users().stream()
-                        .filter(user -> user.userName().equals(userName))
-                        .toList()
-                        .get(0);
+                User loginUser = makaoTalk.users().stream().filter(user -> user.userName().equals(userName)).toList().get(0);
 
                 boolean passwordCorrect = password.equals(loginUser.passWord());
 
                 if (!passwordCorrect) {
                     showAlert("비밀번호를 확인해주세요!");
-
                 }
 
                 if (passwordCorrect) {
@@ -98,7 +94,7 @@ public class LoginPanel extends JPanel {
         contentPanel.setOpaque(true);
         contentPanel.setBackground(Color.DARK_GRAY);
 
-        JPanel buttonPanel = new ButtonPanel(makaoTalk,imagePanel,contentPanel);
+        JPanel buttonPanel = new ButtonPanel(makaoTalk, imagePanel, contentPanel);
 
         imagePanel.add(buttonPanel, BorderLayout.WEST);
         showImagePanel();
