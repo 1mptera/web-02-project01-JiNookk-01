@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.io.IOException;
 
 public class LoginPanel extends JPanel {
     private MakaoTalk makaoTalk;
@@ -55,7 +56,9 @@ public class LoginPanel extends JPanel {
             String password = inputPasswordField.getText();
 
             try {
-                User loginUser = makaoTalk.users().stream().filter(user -> user.userName().equals(userName)).toList().get(0);
+                User loginUser = makaoTalk.undeletedUsers().stream()
+                        .filter(user -> user.userName().equals(userName))
+                        .toList().get(0);
 
                 boolean passwordCorrect = password.equals(loginUser.passWord());
 
@@ -67,7 +70,7 @@ public class LoginPanel extends JPanel {
                     makaoTalk.login(loginUser.id());
                     mainPage();
                 }
-            } catch (ArrayIndexOutOfBoundsException exception) {
+            } catch (ArrayIndexOutOfBoundsException | IOException exception) {
                 showAlert("아이디를 확인해주세요!");
             }
         });
@@ -89,10 +92,10 @@ public class LoginPanel extends JPanel {
         return button;
     }
 
-    private void mainPage() {
+    private void mainPage() throws IOException {
         contentPanel.removeAll();
         contentPanel.setOpaque(true);
-        contentPanel.setBackground(Color.DARK_GRAY);
+        contentPanel.setBackground(new Color(38,38,38));
 
         JPanel buttonPanel = new ButtonPanel(makaoTalk, imagePanel, contentPanel);
 

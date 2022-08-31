@@ -1,9 +1,5 @@
 package models;
 
-//TODO : 메시지 내용, 메시지 작성 시간, 메시지 작성자 ID저장            -> 밸류
-
-import java.util.Objects;
-
 public class Message {
     private final long id;
     private String content;
@@ -35,6 +31,13 @@ public class Message {
 
     public String toCsvRow() {
         return id + "," + content + "," + time + "," + userId ;
+    }
+
+    public String convertTime() {
+        String[] words = time.split("\\.");
+        String[] times = new String[]{words[1], words[2], words[3], words[4]};
+        String time = String.join(".", times);
+        return time;
     }
 
     @Override

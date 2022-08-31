@@ -24,11 +24,9 @@ public class SelectChattingFrame extends JFrame {
     private JButton normalChatting() {
         JButton button = new JButton("일반 채팅");
         button.addActionListener(event -> {
-            JFrame chattingRoomAddWindow = new ChattingRoomAddFrame(makaoTalk);
+            JFrame chattingRoomAddWindow = new ChattingRoomAddFrame(makaoTalk,this);
 
             chattingRoomAddWindow.setVisible(true);
-
-            dispose();
         });
         return button;
     }

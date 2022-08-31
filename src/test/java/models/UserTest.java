@@ -3,6 +3,7 @@ package models;
 import models.ChattingRoom.ChattingRoom;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,9 +11,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UserTest {
     @Test
-    void creation() {
-        Profile profile = new Profile();
-        User user = new User(1, "ojw0828", "7895123", "오진욱", "01085568965");
+    void creation() throws IOException {
+        long id = 1;
+        Profile profile = new Profile(id, deleted);
+        User user = new User(1, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted));
 
         assertEquals("ojw0828", user.userName());
         assertEquals("7895123", user.passWord());
@@ -23,11 +25,11 @@ class UserTest {
     }
 
     @Test
-    void sendMessage() {
+    void sendMessage() throws IOException {
         List<Message> messages = new ArrayList<>();
 
-        User currentUser = new User(1, "ojw0828", "7895123", "오진욱", "01085568965");
-        User otherUser = new User(2, "ojs0828", "9645123", "오진성", "01076308965");
+        User currentUser = new User(1, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted));
+        User otherUser = new User(2, "ojs0828", "9645123", "오진성", "01076308965", new Profile(1, deleted));
 
         List<User> invitedUsers = new ArrayList<>();
 
@@ -35,19 +37,19 @@ class UserTest {
                 1,
                 "title", List.of());
 
-        User user = new User(1, "ojw0828", "7895123", "오진욱", "01085568965");
+        User user = new User(1, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted));
 
         String content = "Hi";
 
     }
 
     @Test
-    void toCsvRow() {
-        User user = new User(1, "ojw0828", "7895123", "오진욱", "01085568965");
+    void toCsvRow() throws IOException {
+        User user = new User(1, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted));
 
         String line = user.toCsvRow();
 
-        assertEquals("1,ojw0828,7895123,오진욱,01085568965", line);
+        assertEquals("1,ojw0828,7895123,오진욱,01085568965,false", line);
     }
 
 }

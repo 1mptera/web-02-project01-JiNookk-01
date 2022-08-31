@@ -3,7 +3,6 @@ package application;
 import frames.MainFrame;
 import models.MakaoTalk;
 import javax.swing.JFrame;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Main {
@@ -26,25 +25,24 @@ public class Main {
         makaoTalk = new MakaoTalk();
 
         makaoTalk.loadUsers();
-        System.out.println(makaoTalk.users());
+//        System.out.println(makaoTalk.undeletedUsers());
+
+        makaoTalk.loadProfiles();
+//        System.out.println(makaoTalk.undeletedProfiles());
 
         makaoTalk.relation().loadUserRelations();
-        System.out.println(makaoTalk.relation().usersRelations());
+//        System.out.println(makaoTalk.relation().usersRelations());
 
         makaoTalk.relation().loadUserChattingRoomRelation();
-        System.out.println(makaoTalk.relation().userChattingRoomRelations());
+//        System.out.println(makaoTalk.relation().userChattingRoomRelations());
 
         makaoTalk.relation().loadChattingRoomMessageRelation();
-        System.out.println(makaoTalk.relation().chattingRoomMessageRelations());
+//        System.out.println(makaoTalk.relation().chattingRoomMessageRelations());
 
         makaoTalk.loadChattingRooms();
-        System.out.println(makaoTalk.chattingRooms());
+//        System.out.println(makaoTalk.chattingRooms());
 
         makaoTalk.loadMessages();
 
-//        System.out.println(makaoTalk.friends());
-//        System.out.println(makaoTalk.chattingRooms());
     }
-
-    // TODO : 친구 창
 }

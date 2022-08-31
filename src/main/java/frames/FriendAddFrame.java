@@ -160,11 +160,12 @@ public class FriendAddFrame extends JFrame {
         JButton button = new JButton("친구 추가");
         button.setPreferredSize(new Dimension(0, 50));
         button.addActionListener(event -> {
+            User loginUser = makaoTalk.user(makaoTalk.loginUserId());
             if (mode.equals("ID")) {
                 String userName = inputIdField.getText();
 
-                for (User user : makaoTalk.users()) {
-                    if (userName.equals(user.userName())) {
+                for (User user : makaoTalk.undeletedUsers()) {
+                    if (userName.equals(user.userName()) && !userName.equals(loginUser.userName())) {
                         // TODO : 관계 추가, 현재 유저의 상태도 아직 설정하지 않음.
                         addFriend(user);
                     }
@@ -175,8 +176,11 @@ public class FriendAddFrame extends JFrame {
                 String name = inputNameField.getText();
                 String phoneNumber = inputPhoneNumberField.getText();
 
-                for (User user : makaoTalk.users()) {
-                    if (name.equals(user.name()) && phoneNumber.equals(user.phoneNumber())) {
+                for (User user : makaoTalk.undeletedUsers()) {
+                    if (name.equals(user.name()) &&
+                            !name.equals(loginUser.name()) &&
+                            phoneNumber.equals(user.phoneNumber())&&
+                            !phoneNumber.equals(loginUser.phoneNumber())) {
                         addFriend(user);
                     }
                 }

@@ -2,29 +2,28 @@ package models;
 
 // TODO : ID, 비밀 번호, 이름, 프로필, 친구목록, 전화번호? -> 엔티티
 
-import models.ChattingRoom.ChattingRoom;
 import utils.Parser;
-import utils.loader.UserLoader;
 import utils.Timer;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class User {
     private final long id;
     private String userName;
     private String passWord;
     private String nickName;
-    private Profile profile;
     private String phoneNumber;
+    private Profile profile;
     private boolean deleted = false;
 
-    public User(long id, String userName, String passWord, String nickName, String phoneNumber) {
+    public User(long id, String userName, String passWord, String nickName, String phoneNumber, Profile profile) throws IOException {
         this.id = id;
         this.userName = userName;
         this.passWord = passWord;
         this.nickName = nickName;
-        this.profile = new Profile();
         this.phoneNumber = phoneNumber;
+        this.profile = profile;
     }
 
     public long id() {
@@ -41,6 +40,10 @@ public class User {
 
     public String name() {
         return nickName;
+    }
+
+    public Profile profile() {
+        return profile;
     }
 
     public boolean deleted() {
@@ -77,8 +80,8 @@ public class User {
         return parser.newMessage(content, time, id);
     }
 
-    public Profile profile() {
-        return profile;
+    public void loadProfile(Profile profile) {
+        this.profile = profile;
     }
 
     public String toCsvRow() {
@@ -87,6 +90,8 @@ public class User {
 
     public void deleteID() {
         deleted = true;
+
+        profile.delete();
     }
 
     public void setDeleted(boolean deleted) {

@@ -2,6 +2,7 @@ package frames;
 
 import models.MakaoTalk;
 import models.User;
+import utils.loader.ProfileLoader;
 import utils.loader.UserLoader;
 
 import javax.swing.JButton;
@@ -85,7 +86,7 @@ public class RegisterFrame extends JFrame {
             boolean isPhoneNumberBlank = phoneNumber.equals("");
             boolean isUserNameOverlapped = false;
 
-            for (User user : makaoTalk.users()) {
+            for (User user : makaoTalk.undeletedUsers()) {
                 if (user.userName().equals(userName)) {
                     isUserNameOverlapped = true;
                 }
@@ -117,11 +118,11 @@ public class RegisterFrame extends JFrame {
                 try {
                     makaoTalk.register(userName, password, nickName, phoneNumber);
 
-                    UserLoader userLoader = new UserLoader();
+                    new UserLoader().saveUsers(makaoTalk.users());
 
-                    userLoader.saveUsers(makaoTalk.users());
-
-                    JFrame alertFrame = new AlertFrame("회원가입이 완료되었습니다!");
+                    new ProfileLoader().saveProfiles(makaoTalk.profiles());
+//                    JFrame alertFrame = new AlertFrame("회원가입이 완료되었습니다!");
+                    JFrame alertFrame = new AlertFrame(makaoTalk.undeletedProfiles().toString());
                     alertFrame.setVisible(true);
                 } catch (IOException e) {
                     throw new RuntimeException(e);

@@ -3,6 +3,7 @@ package frames;
 import models.MakaoTalk;
 import models.User;
 import panels.LoginPanel;
+import utils.loader.ProfileLoader;
 import utils.loader.UserLoader;
 
 import javax.swing.JButton;
@@ -13,7 +14,7 @@ import java.awt.BorderLayout;
 import java.io.IOException;
 
 public class DeleteIDFrame extends JFrame {
-    private MakaoTalk makaoTalk;
+    private final MakaoTalk makaoTalk;
     private JPanel imagePanel;
     private JPanel contentPanel;
 
@@ -45,6 +46,7 @@ public class DeleteIDFrame extends JFrame {
 
             try {
                 new UserLoader().saveUsers(makaoTalk.users());
+                new ProfileLoader().saveProfiles(makaoTalk.profiles());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

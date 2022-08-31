@@ -3,9 +3,11 @@ package models.Relation;
 import models.ChattingRoom.ChattingRoom;
 import models.MakaoTalk;
 import models.Message;
+import models.Profile;
 import models.User;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,12 +44,12 @@ class RelationTest {
     }
 
     @Test
-    void requestFriend() {
+    void requestFriend() throws IOException {
         MakaoTalk makaoTalk = new MakaoTalk();
 
-        User user1 = new User(1, "ojw0828", "7895123", "오진욱", "01085568965");
-        User user2 = new User(2, "ojw0828", "7895123", "오진욱", "01085568965");
-        User user3 = new User(3, "ojw0828", "7895123", "오진욱", "01085568965");
+        User user1 = new User(1, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted));
+        User user2 = new User(2, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted));
+        User user3 = new User(3, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted));
 
         makaoTalk.login(user1.id());
         makaoTalk.relation().requestFriend(user2.id());
@@ -148,12 +150,12 @@ class RelationTest {
     }
 
     @Test
-    void newUserChattingRoomRelations() {
+    void newUserChattingRoomRelations() throws IOException {
         Relation relation = new Relation();
 
-        User user1 = new User(1, "ojw", "ojw123", "오진욱", "01085568965");
-        User user2 = new User(2, "ojs", "ojs123", "오진성", "01052398955");
-        User user3 = new User(3, "bjh", "bjh123", "배준형", "01024593050");
+        User user1 = new User(1, "ojw", "ojw123", "오진욱", "01085568965", new Profile(1, deleted));
+        User user2 = new User(2, "ojs", "ojs123", "오진성", "01052398955", new Profile(1, deleted));
+        User user3 = new User(3, "bjh", "bjh123", "배준형", "01024593050", new Profile(1, deleted));
 
         List<User> invitedUsers = List.of(user1, user2, user3);
 

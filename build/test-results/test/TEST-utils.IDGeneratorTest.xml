@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="utils.IDGeneratorTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2022-08-31T07:04:36" hostname="ojinugucBookAir" time="0.002">
+<testsuite name="utils.IDGeneratorTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2022-09-01T06:45:35" hostname="ojinugucBookAir" time="0.002">
   <properties/>
-  <testcase name="chattingRoomId()" classname="utils.IDGeneratorTest" time="0.001"/>
+  <testcase name="chattingRoomId()" classname="utils.IDGeneratorTest" time="0.0"/>
   <testcase name="messageId()" classname="utils.IDGeneratorTest" time="0.0"/>
   <testcase name="newMessageId()" classname="utils.IDGeneratorTest" time="0.0"/>
   <testcase name="userId()" classname="utils.IDGeneratorTest" time="0.0"/>
   <testcase name="newChattingRoomId()" classname="utils.IDGeneratorTest" time="0.0"/>
-  <testcase name="newID()" classname="utils.IDGeneratorTest" time="0.0"/>
+  <testcase name="newID()" classname="utils.IDGeneratorTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
