@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="models.MakaoTalkTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2022-08-30T05:07:43" hostname="ojinugucBookAir" time="0.02">
+<testsuite name="models.MakaoTalkTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2022-08-31T07:04:36" hostname="ojinugucBookAir" time="0.017">
   <properties/>
-  <testcase name="chattingRooms()" classname="models.MakaoTalkTest" time="0.008"/>
-  <testcase name="register()" classname="models.MakaoTalkTest" time="0.008"/>
+  <testcase name="chattingRooms()" classname="models.MakaoTalkTest" time="0.002"/>
+  <testcase name="messageOwnerName()" classname="models.MakaoTalkTest" time="0.001"/>
+  <testcase name="register()" classname="models.MakaoTalkTest" time="0.007"/>
   <testcase name="user()" classname="models.MakaoTalkTest" time="0.001"/>
   <testcase name="login()" classname="models.MakaoTalkTest" time="0.0"/>
-  <testcase name="users()" classname="models.MakaoTalkTest" time="0.001"/>
+  <testcase name="users()" classname="models.MakaoTalkTest" time="0.0"/>
   <testcase name="currentUser()" classname="models.MakaoTalkTest" time="0.0"/>
-  <testcase name="requestFriend()" classname="models.MakaoTalkTest" time="0.001"/>
-  <testcase name="loginUserFriends()" classname="models.MakaoTalkTest" time="0.0"/>
+  <testcase name="currentChattingRoomOneMessage()" classname="models.MakaoTalkTest" time="0.002"/>
+  <testcase name="loginUserChattingRooms()" classname="models.MakaoTalkTest" time="0.001"/>
+  <testcase name="newChattingRoom()" classname="models.MakaoTalkTest" time="0.001"/>
+  <testcase name="currentChattingRoomWithoutMessages()" classname="models.MakaoTalkTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

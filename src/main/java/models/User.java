@@ -3,9 +3,11 @@ package models;
 // TODO : ID, 비밀 번호, 이름, 프로필, 친구목록, 전화번호? -> 엔티티
 
 import models.ChattingRoom.ChattingRoom;
-import utils.UserLoader;
-import utils.MessageParser;
+import utils.Parser;
+import utils.loader.UserLoader;
 import utils.Timer;
+
+import java.io.FileNotFoundException;
 
 public class User {
     private final long id;
@@ -22,8 +24,8 @@ public class User {
         this.userName = userName;
         this.passWord = passWord;
         this.nickName = nickName;
+        this.profile = new Profile();
         this.phoneNumber = phoneNumber;
-        this.profile = userLoader.loadProfile();
     }
 
     public long id() {
@@ -46,15 +48,14 @@ public class User {
         return phoneNumber;
     }
 
-    public void sendMessageToChattingRoom(String content, ChattingRoom chattingRoom) {
+    public Message sendMessageToSystem(String content) throws FileNotFoundException {
         Timer timer = new Timer();
 
         String time = timer.currentTime();
 
-        MessageParser messageParser = new MessageParser();
-        Message message = messageParser.parseMessage(content, time, userName);
+        Parser parser = new Parser();
 
-        chattingRoom.receiveMessage(message);
+        return parser.newMessage(content, time, id);
     }
 
     public Profile profile() {

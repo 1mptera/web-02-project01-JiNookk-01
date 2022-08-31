@@ -32,26 +32,13 @@ class UserTest {
         List<User> invitedUsers = new ArrayList<>();
 
         ChattingRoom chattingRoom = new ChattingRoom(
-                invitedUsers,
-                currentUser,
-                messages
-        );
+                1,
+                "title", List.of());
 
         User user = new User(1, "ojw0828", "7895123", "오진욱", "01085568965");
 
         String content = "Hi";
 
-        user.sendMessageToChattingRoom(content, chattingRoom);
-
-        assertEquals("Hi", chattingRoom.messages().get(0).content());
-
-        user.sendMessageToChattingRoom("Hello", chattingRoom);
-
-        assertEquals("Hello", chattingRoom.messages().get(1).content());
-
-        user.sendMessageToChattingRoom("Fighting", chattingRoom);
-
-        assertEquals("Fighting", chattingRoom.messages().get(2).content());
     }
 
     @Test

@@ -3,7 +3,7 @@ package frames;
 import models.MakaoTalk;
 import models.User;
 import utils.OverlapValidator;
-import utils.UserLoader;
+import utils.loader.UserLoader;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -26,9 +26,11 @@ public class FriendAddFrame extends JFrame {
 
     private String mode = "PhoneNumber";
     private MakaoTalk makaoTalk;
+    private JPanel contentPanel;
 
-    public FriendAddFrame(MakaoTalk makaoTalk) {
+    public FriendAddFrame(MakaoTalk makaoTalk, JPanel contentPanel) {
         this.makaoTalk = makaoTalk;
+        this.contentPanel = contentPanel;
 
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(300, 420);
@@ -189,12 +191,12 @@ public class FriendAddFrame extends JFrame {
                 validateUserRelations(friend, makaoTalk);
 
         if (!friendAlreadyExist) {
-            makaoTalk.requestFriend(friend.id());
+            makaoTalk.relation().requestFriend(friend.id());
 
             UserLoader userLoader = new UserLoader();
 
             try {
-                userLoader.saveUsersRelations(makaoTalk.usersRelations());
+                userLoader.saveUsersRelations(makaoTalk.relation().usersRelations());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -202,6 +204,9 @@ public class FriendAddFrame extends JFrame {
             JFrame alertFrame = new AlertFrame(friend.name() + "님을 추가하였습니다.");
             alertFrame.setVisible(true);
             dispose();
+
+            contentPanel.setVisible(false);
+            contentPanel.setVisible(true);
         }
 
         if (friendAlreadyExist) {

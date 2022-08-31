@@ -2,7 +2,7 @@ package frames;
 
 import models.MakaoTalk;
 import models.User;
-import utils.UserLoader;
+import utils.loader.UserLoader;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -120,6 +120,9 @@ public class RegisterFrame extends JFrame {
                     UserLoader userLoader = new UserLoader();
 
                     userLoader.saveUsers(makaoTalk.users());
+
+                    JFrame alertFrame = new AlertFrame("회원가입이 완료되었습니다!");
+                    alertFrame.setVisible(true);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

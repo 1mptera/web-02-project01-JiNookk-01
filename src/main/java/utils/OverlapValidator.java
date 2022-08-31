@@ -6,7 +6,7 @@ import models.User;
 
 public class OverlapValidator {
     public boolean validateUserRelations(User friend, MakaoTalk makaoTalk) {
-        for (UsersRelation usersRelation : makaoTalk.loginUserFriends()) {
+        for (UsersRelation usersRelation : makaoTalk.relation().loginUserFriends()) {
             if (usersRelation.friendId() == friend.id()) {
                 return true;
             }

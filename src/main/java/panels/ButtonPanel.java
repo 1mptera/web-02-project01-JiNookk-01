@@ -1,25 +1,22 @@
 package panels;
 
+import frames.ChattingRoomAddFrame;
 import frames.FriendAddFrame;
-import models.ChattingRoom.ChattingRoom;
-import models.ChattingRoom.SingleChatting;
+import frames.SelectChattingFrame;
 import models.MakaoTalk;
-import models.Relation.UsersRelation;
-import models.User;
-import utils.MouseEventListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 public class ButtonPanel extends JPanel {
-    private final MouseEventListener mouseListener = new MouseEventListener();
     private MakaoTalk makaoTalk;
     private JPanel imagePanel;
     private JPanel contentPanel;
@@ -69,7 +66,7 @@ public class ButtonPanel extends JPanel {
     private JButton addFriendButton() {
         JButton button = new JButton("친구 추가");
         button.addActionListener(event -> {
-            JFrame friendAddWindow = new FriendAddFrame(makaoTalk);
+            JFrame friendAddWindow = new FriendAddFrame(makaoTalk,contentPanel);
 
             friendAddWindow.setVisible(true);
         });
@@ -77,53 +74,45 @@ public class ButtonPanel extends JPanel {
     }
 
 
-
     // TODO : 채팅 창
     private JButton chattingButton() {
         JButton button = new JButton("채팅목록");
         button.addActionListener(event -> {
             contentPanel.removeAll();
+            contentPanel.setLayout(new BorderLayout());
+            contentPanel.add(chattingRoomsToolPanel(), BorderLayout.NORTH);
 
-            for (ChattingRoom chattingRoom : makaoTalk.chattingRooms()) {
-                if (chattingRoom.type().equals("single")) {
-                    ChattingRoom singleChatting =
-                            new SingleChatting(chattingRoom.invitedUsers(),
-                                    chattingRoom.currentUser(),
-                                    chattingRoom.messages()
-                            );
-
-                    contentPanel.add(chattingRoomPanel(singleChatting));
-                }
-
-                if (chattingRoom.type().equals("multi")) {
-                    contentPanel.add(chattingRoomPanel(chattingRoom));
-                }
-            }
+            JPanel chattingRoomsPanel = new ChattingRoomsPanel(makaoTalk);
+            contentPanel.add(chattingRoomsPanel);
 
             showImagePanel();
         });
         return button;
     }
 
-    private JPanel chattingRoomPanel(ChattingRoom chattingRoom) {
+    private JPanel chattingRoomsToolPanel() {
         JPanel panel = new JPanel();
-        panel.add(chattingRoomProfilePicturePanel(chattingRoom));
-        panel.add(chattingRoomDescriptionPanel(chattingRoom));
-        panel.addMouseListener(mouseListener.openChattingRoomWindow(chattingRoom));
+        panel.setBackground(Color.green);
+        panel.add(chattingRoomsFindButton());
+        panel.add(addChattingRoomButton());
         return panel;
     }
 
-    private JPanel chattingRoomDescriptionPanel(ChattingRoom chattingRoom) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(2, 1));
-        panel.add(new JLabel(chattingRoom.title()));
-        panel.add(new JLabel(chattingRoom.previewMessage()));
-        return panel;
+
+    private JButton chattingRoomsFindButton() {
+        JButton button = new JButton("찾기");
+        return button;
     }
 
-    private JPanel chattingRoomProfilePicturePanel(ChattingRoom chattingRoom) {
-        return new JPanel();
+    private JButton addChattingRoomButton() {
+        JButton button = new JButton("채팅 추가");
+        button.addActionListener(event -> {
+            JFrame selectChattingModeWindow = new SelectChattingFrame(makaoTalk);
+            selectChattingModeWindow.setVisible(true);
+        });
+        return button;
     }
+
 
     private JButton logoutButton() {
         JButton button = new JButton("로그아웃");
