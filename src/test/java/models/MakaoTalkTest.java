@@ -4,7 +4,6 @@ import models.ChattingRoom.ChattingRoom;
 import models.Relation.UserChattingRoomRelation;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,29 +12,29 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MakaoTalkTest {
     @Test
-    void users() {
+    void users() throws IOException {
         MakaoTalk makaoTalk = new MakaoTalk();
 
-        List<User> users = makaoTalk.users();
+        List<User> users = makaoTalk.undeletedUsers();
 
-        User user1 = new User(1, "ojw0828", "1", "오진욱", "01085568965");
+        User user1 = new User(1, "ojw0828", "1", "오진욱", "01085568965", new Profile(1, deleted));
 
         makaoTalk.addUser(user1);
 
-        assertEquals(user1, users.get(0));
+        assertEquals(user1, makaoTalk.undeletedUsers().get(0));
 
-        User user2 = new User(2, "ojs0828", "1", "오진성", "01052398955");
+        User user2 = new User(2, "ojs0828", "1", "오진성", "01052398955", new Profile(1, deleted));
 
         makaoTalk.addUser(user2);
 
-        assertEquals(user2, users.get(1));
+        assertEquals(user2, makaoTalk.undeletedUsers().get(1));
     }
 
     @Test
-    void currentUser() {
+    void currentUser() throws IOException {
         MakaoTalk makaoTalk = new MakaoTalk();
 
-        User loginUser = new User(1, "ojw0828", "1", "오진욱", "01085568965");
+        User loginUser = new User(1, "ojw0828", "1", "오진욱", "01085568965", new Profile(1, deleted));
 
         makaoTalk.updateLoginUserId(loginUser.id());
 
@@ -43,15 +42,15 @@ class MakaoTalkTest {
     }
 
     @Test
-    void chattingRooms() {
+    void chattingRooms() throws IOException {
         MakaoTalk makaoTalk = new MakaoTalk();
 
         List<Message> messages = new ArrayList<>();
         messages.add(new Message(1, "hi", "20220828", 1));
         messages.add(new Message(1, "why", "20220828", 2));
 
-        User currentUser = new User(1, "ojw0828", "7895123", "오진욱", "01085568965");
-        User otherUser = new User(2, "ojs0828", "9645123", "오진성", "01052398955");
+        User currentUser = new User(1, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted));
+        User otherUser = new User(2, "ojs0828", "9645123", "오진성", "01052398955", new Profile(1, deleted));
 
         List<User> invitedUsers = new ArrayList<>();
         invitedUsers.add(currentUser);
@@ -72,21 +71,21 @@ class MakaoTalkTest {
 
         makaotalk.register("ojw", "ojw123", "오진욱", "phoneNumber");
 
-//        assertEquals(List.of(new User(1, "ojw","ojw123","오진욱")),makaotalk.users());
+//        assertEquals(List.of(new User(1, "ojw","ojw123","오진욱")),makaotalk.undeletedUsers());
     }
 
     @Test
-    void login() {
+    void login() throws IOException {
         MakaoTalk makaoTalk = new MakaoTalk();
 
-        User loginUser1 = new User(1, "ojw0828", "7895123", "오진욱", "01085568965");
+        User loginUser1 = new User(1, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted));
 
         makaoTalk.login(loginUser1.id());
 
         assertEquals(1, makaoTalk.loginUserId());
         assertEquals(1, makaoTalk.relation().loginUserId());
 
-        User loginUser2 = new User(2, "ojw0828", "7895123", "오진욱", "01085568965");
+        User loginUser2 = new User(2, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted));
 
         makaoTalk.login(loginUser2.id());
 
@@ -95,25 +94,25 @@ class MakaoTalkTest {
     }
 
     @Test
-    void user() {
+    void user() throws IOException {
         MakaoTalk makaoTalk = new MakaoTalk();
 
-        makaoTalk.addUser(new User(1, "ojw", "ojw123", "오진욱", "01085568965"));
-        makaoTalk.addUser(new User(2, "ojs", "ojw123", "오진성", "01085568965"));
-        makaoTalk.addUser(new User(3, "oja", "ojw123", "오진어", "01085568965"));
+        makaoTalk.addUser(new User(1, "ojw", "ojw123", "오진욱", "01085568965", new Profile(1, deleted)));
+        makaoTalk.addUser(new User(2, "ojs", "ojw123", "오진성", "01085568965", new Profile(1, deleted)));
+        makaoTalk.addUser(new User(3, "oja", "ojw123", "오진어", "01085568965", new Profile(1, deleted)));
 
-        assertEquals(new User(1, "ojw", "ojw123", "오진욱", "01085568965"), makaoTalk.user(1));
-        assertEquals(new User(2, "ojw", "ojw123", "오진욱", "01085568965"), makaoTalk.user(2));
-        assertEquals(new User(3, "ojw", "ojw123", "오진욱", "01085568965"), makaoTalk.user(3));
+        assertEquals(new User(1, "ojw", "ojw123", "오진욱", "01085568965", new Profile(1, deleted)), makaoTalk.user(1));
+        assertEquals(new User(2, "ojw", "ojw123", "오진욱", "01085568965", new Profile(1, deleted)), makaoTalk.user(2));
+        assertEquals(new User(3, "ojw", "ojw123", "오진욱", "01085568965", new Profile(1, deleted)), makaoTalk.user(3));
     }
 
     @Test
-    void messageOwnerName() {
+    void messageOwnerName() throws IOException {
         MakaoTalk makaoTalk = new MakaoTalk();
 
-        makaoTalk.addUser(new User(1, "ojw", "ojw123", "오진욱", "01085568965"));
-        makaoTalk.addUser(new User(2, "ojs", "ojw123", "오진성", "01085568965"));
-        makaoTalk.addUser(new User(3, "oja", "ojw123", "오진어", "01085568965"));
+        makaoTalk.addUser(new User(1, "ojw", "ojw123", "오진욱", "01085568965", new Profile(1, deleted)));
+        makaoTalk.addUser(new User(2, "ojs", "ojw123", "오진성", "01085568965", new Profile(1, deleted)));
+        makaoTalk.addUser(new User(3, "oja", "ojw123", "오진어", "01085568965", new Profile(1, deleted)));
 
         String messageOwner = makaoTalk.messageOwnerName(new Message(1, "content", "20220828", 1));
 
@@ -121,8 +120,13 @@ class MakaoTalkTest {
     }
 
     @Test
-    void newChattingRoom() throws FileNotFoundException {
+    void newChattingRoom() throws IOException {
         MakaoTalk makaoTalk = new MakaoTalk();
+
+        makaoTalk.addUser(new User(1, "ojw", "ojw123", "오진욱", "01085568965", new Profile(1, deleted)));
+        makaoTalk.addUser(new User(2, "ojs", "ojw123", "오진성", "01085568965", new Profile(1, deleted)));
+        makaoTalk.addUser(new User(3, "oja", "ojw123", "오진어", "01085568965", new Profile(1, deleted)));
+        makaoTalk.addUser(new User(4, "ojb", "ojw123", "오진배", "01085568965", new Profile(1, deleted)));
 
         List<Invitation> invitations = List.of(
                 new Invitation(2),
@@ -130,15 +134,16 @@ class MakaoTalkTest {
         );
 
         List<User> invitedUsers = List.of(
-                new User(2, "ojs", "ojw123", "오진성", "01085568965"),
-                new User(3, "oja", "ojw123", "배준형", "01085568965")
+                new User(2, "ojs", "ojw123", "오진성", "01085568965", new Profile(1, deleted)),
+                new User(3, "oja", "ojw123", "배준형", "01085568965", new Profile(1, deleted))
         );
 
-        assertEquals(new ChattingRoom(4, "오진성,배준형", invitedUsers), makaoTalk.newChatting(invitations));
+        assertEquals("오진성,오진어", makaoTalk.newChatting(invitations).title());
+        assertEquals(invitedUsers, makaoTalk.newChatting(invitations).invitedUsers());
     }
 
     @Test
-    void loginUserChattingRooms() {
+    void loginUserChattingRooms() throws IOException {
         MakaoTalk makaoTalk = new MakaoTalk();
 
         makaoTalk.login(1);
@@ -151,9 +156,9 @@ class MakaoTalkTest {
         makaoTalk.relation().addUserChattingRoomRelation(new UserChattingRoomRelation(2, 3));
         makaoTalk.relation().addUserChattingRoomRelation(new UserChattingRoomRelation(3, 3));
 
-        User user1 = new User(1, "ojw", "ojw123", "오진욱", "01085568965");
-        User user2 = new User(2, "ojs", "ojs123", "오진성", "01052398955");
-        User user3 = new User(3, "bjh", "bjh123", "배준형", "01024593050");
+        User user1 = new User(1, "ojw", "ojw123", "오진욱", "01085568965", new Profile(1, deleted));
+        User user2 = new User(2, "ojs", "ojs123", "오진성", "01052398955", new Profile(1, deleted));
+        User user3 = new User(3, "bjh", "bjh123", "배준형", "01024593050", new Profile(1, deleted));
 
         List<User> invitedUsers1 = List.of(user1, user2, user3);
         List<User> invitedUsers2 = List.of(user1, user2);

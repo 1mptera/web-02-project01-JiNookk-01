@@ -2,33 +2,64 @@ package models;
 
 // TODO : 프로필 메시지, 프로필 사진, 프로필 음악 -> 엔티티
 
+import java.io.IOException;
 import java.util.Objects;
-import java.util.UUID;
 
 public class Profile {
-    private String message = "";
-    private Picture picture = null;
-    private Music music = null;
-    private String id;
+    public static final int PROFILEWIDTH = 40;
+    public static final int PROFILEHEIGHT = 40;
+    public static final int MYPROFILEWIDTH = 55;
+    public static final int MYPROFILEHEIGHT = 55;
+    public static final int MODIFYPROFILEWIDTH = 110;
+    public static final int MODIFYPROFILEHEIGHT = 90;
 
-    public Profile() {
-        id = UUID.randomUUID().toString();
+    private long id;
+    private String message = "";
+    private Picture picture;
+    private Music music = null;
+    private boolean deleted;
+
+    public Profile(long id, boolean deleted) throws IOException {
+        this.id = id;
+        this.deleted = deleted;
+        this.picture = new Picture();
     }
 
-    public String profileMessage() {
+    public long id() {
+        return id;
+    }
+
+    public String message() {
         return message;
     }
 
-    public Picture profilePicture() {
+    public Picture picture() {
         return picture;
     }
 
-    public Music profileMusic() {
+    public Music music() {
         return music;
     }
 
-    public void setProfileMessage(String message) {
+    public boolean deleted() {
+        return deleted;
+    }
+
+    public void updateProfileMessage(String message) {
         this.message = message;
+    }
+
+    public void delete() {
+        deleted = true;
+    }
+
+    public String toCsvRow() {
+        return id + "," + message + "," + picture.imagePath() + "," + deleted;
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
     }
 
     @Override

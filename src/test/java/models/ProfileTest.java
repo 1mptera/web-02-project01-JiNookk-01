@@ -2,24 +2,50 @@ package models;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProfileTest {
     @Test
-    void creation() {
-        Profile profile = new Profile();
+    void creation() throws IOException {
+        long id = 1;
+        Profile profile = new Profile(id, deleted);
 
-        assertEquals("", profile.profileMessage());
-        assertNull(profile.profilePicture());
-        assertNull(profile.profileMusic());
+        assertEquals("", profile.message());
+        assertNotNull(profile.picture());
+        assertNull(profile.music());
+        assertEquals(false,profile.deleted());
     }
 
     @Test
-    void setProfileMessage() {
-        Profile profile = new Profile();
+    void setProfileMessage() throws IOException {
+        long id = 1;
 
-        profile.setProfileMessage("Hello");
+        Profile profile = new Profile(id, deleted);
 
-        assertEquals("Hello", profile.profileMessage());
+        profile.updateProfileMessage("Hello");
+
+        assertEquals("Hello", profile.message());
+    }
+
+    @Test
+    void toCsvRow() throws IOException {
+        Profile profile1 = new Profile(1, deleted);
+
+        assertEquals("1,./src/main/resources/images/defaultProfileImage.png", profile1.toCsvRow());
+
+        Profile profile2 = new Profile(2, deleted);
+
+        assertEquals("2,./src/main/resources/images/defaultProfileImage.png", profile2.toCsvRow());
+    }
+
+    @Test
+    void delete() throws IOException {
+        Profile profile = new Profile(1, deleted);
+
+        profile.delete();
+
+        assertTrue(profile.deleted());
     }
 }

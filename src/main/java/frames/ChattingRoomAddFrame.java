@@ -16,21 +16,22 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChattingRoomAddFrame extends JFrame {
     private final MakaoTalk makaoTalk;
+    private SelectChattingFrame selectChattingFrame;
     private List<Invitation> invitations;
 
     private JTextField searchFriendNameField;
 
-    public ChattingRoomAddFrame(MakaoTalk makaoTalk) {
+    public ChattingRoomAddFrame(MakaoTalk makaoTalk, SelectChattingFrame selectChattingFrame) {
+        this.makaoTalk = makaoTalk;
+        this.selectChattingFrame = selectChattingFrame;
         invitations = initInvitations(makaoTalk);
 
-        this.makaoTalk = makaoTalk;
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(300, 480);
 
@@ -99,7 +100,6 @@ public class ChattingRoomAddFrame extends JFrame {
             if (!checkBox.isSelected()) {
                 invitation.setChecked(false);
             }
-            new AlertFrame(Boolean.toString(invitation.checked()));
         });
         return checkBox;
     }
@@ -141,16 +141,18 @@ public class ChattingRoomAddFrame extends JFrame {
                 try {
                     ChattingRoom newChattingRoom = makaoTalk.newChatting(invitationList);
 //                    new AlertFrame(newChattingRoom.toString());
-                    new AlertFrame(makaoTalk.relation().userChattingRoomRelations().toString());
+//                    new AlertFrame(makaoTalk.relation().userChattingRoomRelations().toString());
 
                     ChattingRoomLoader chattingRoomLoader = new ChattingRoomLoader();
                     chattingRoomLoader.saveUserChattingRoomRelations(makaoTalk.relation().userChattingRoomRelations());
                     chattingRoomLoader.saveChattingRooms(makaoTalk.chattingRooms());
 
-                    dispose();
-
+                    makaoTalk.openChattingRoom(newChattingRoom.id());
                     JFrame chattingRoomWindow = new ChattingRoomWindow(makaoTalk, newChattingRoom);
                     chattingRoomWindow.setVisible(true);
+
+                    dispose();
+                    selectChattingFrame.dispose();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

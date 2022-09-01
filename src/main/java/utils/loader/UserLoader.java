@@ -30,7 +30,7 @@ public class UserLoader {
         return userId;
     }
 
-    public List<User> loadUser() throws FileNotFoundException {
+    public List<User> loadUsers() throws IOException {
         List<User> users = new ArrayList<>();
 
         File file = new File("./src/main/resources/DB/user.csv");
@@ -42,11 +42,13 @@ public class UserLoader {
 
             Parser parser = new Parser();
 
-            User user = parser.parseUser(line);
+            // TODO : 나중에 손봐야 할 profile -> 관계에 맞는 프로파일을 입력해주어야 한다.
 
-            if (!user.deleted()) {
-                users.add(user);
-            }
+            Profile defaultProfile = new Profile(1, false);
+
+            User user = parser.parseUser(line, defaultProfile);
+
+            users.add(user);
         }
         return users;
     }

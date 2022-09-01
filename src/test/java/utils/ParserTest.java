@@ -3,11 +3,13 @@ package utils;
 import models.ChattingRoom.ChattingRoom;
 import models.Invitation;
 import models.Message;
+import models.Profile;
 import models.Relation.UserChattingRoomRelation;
 import models.Relation.UsersRelation;
 import models.User;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,12 +17,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ParserTest {
     @Test
-    void parseUser() {
+    void parseUser() throws IOException {
         Parser parser = new Parser();
 
-        User user1 = parser.parseUser("1,ojw,ojw123,오진욱,01085568965");
+        Profile defaultProfile = new Profile(1, deleted);
 
-        User user2 = new User(2, "ojw", "ojw123", "오진욱", "01085568965");
+        User user1 = parser.parseUser("1,ojw,ojw123,오진욱,01085568965,false", defaultProfile);
+        User user2 = new User(2, "ojw", "ojw123", "오진욱", "01085568965", defaultProfile);
 
         assertEquals(user2.userName(), user1.userName());
         assertEquals(user2.passWord(), user1.passWord());
@@ -33,7 +36,7 @@ class ParserTest {
 
         String line = parser.parseLine(1, "ojw", "ojw123", "오진욱", "01085568965", false);
 
-        assertEquals("1,ojw,ojw123,오진욱,01085568965", line);
+        assertEquals("1,ojw,ojw123,오진욱,01085568965,false", line);
     }
 
     @Test
@@ -48,19 +51,19 @@ class ParserTest {
     }
 
     @Test
-    void parseChattingRoom() {
+    void parseChattingRoom() throws IOException {
         Parser parser = new Parser();
 
-        String line = "1,징성";
+        String line = "1/징성";
         List<User> users = List.of(
-                new User(1, "ojw0828", "7895123", "오진욱", "01085568965"),
-                new User(2, "ojw0828", "7895123", "오진성", "01085568965")
+                new User(1, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted)),
+                new User(2, "ojw0828", "7895123", "오진성", "01085568965", new Profile(1, deleted))
         );
 
         ChattingRoom chattingRoom = parser.parseChattingRoom(line, users, List.of());
 
         assertEquals(1, chattingRoom.id());
-//        assertEquals(users, chattingRoom.invitedUsers());
+//        assertEquals(undeletedUsers, chattingRoom.invitedUsers());
     }
 
     @Test
@@ -97,16 +100,16 @@ class ParserTest {
     }
 
     @Test
-    void parseInvitedUsers() {
+    void parseInvitedUsers() throws IOException {
         Parser parser = new Parser();
 
         List<Invitation> invitations = List.of(
                 new Invitation(1)
         );
 
-        User user1 = new User(1, "ojw0828", "7895123", "오진욱", "01085568965");
-        User user2 = new User(2, "ojw0828", "7895123", "오진성", "01085568965");
-        User user3 = new User(2, "ojw0828", "7895123", "배준형", "01085568965");
+        User user1 = new User(1, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted));
+        User user2 = new User(2, "ojw0828", "7895123", "오진성", "01085568965", new Profile(1, deleted));
+        User user3 = new User(2, "ojw0828", "7895123", "배준형", "01085568965", new Profile(1, deleted));
 
         List<User> users = List.of(user1, user2, user3);
 
@@ -123,20 +126,30 @@ class ParserTest {
     }
 
     @Test
-    void parseTitle() {
+    void parseTitle() throws IOException {
         Parser parser = new Parser();
 
         List<User> invitedUsers = new ArrayList<>();
-        invitedUsers.add(new User(1, "ojw0828", "7895123", "오진욱", "01085568965"));
+        invitedUsers.add(new User(1, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted)));
 
         String title = parser.parseChattingRoomTitle(invitedUsers);
 
         assertEquals("오진욱", title);
 
-        invitedUsers.add(new User(2, "ojw0828", "7895123", "오진성", "01085568965"));
+        invitedUsers.add(new User(2, "ojw0828", "7895123", "오진성", "01085568965", new Profile(1, deleted)));
 
         title = parser.parseChattingRoomTitle(invitedUsers);
 
         assertEquals("오진욱,오진성", title);
+    }
+
+    @Test
+    void parseProfile() throws IOException {
+        Parser parser = new Parser();
+
+        Profile profile = parser.parseProfile("1,./src/main/resources/images/jingseong.png");
+
+        assertEquals(1,profile.id());
+        assertEquals("./src/main/resources/images/jingseong.png",profile.picture().imagePath());
     }
 }

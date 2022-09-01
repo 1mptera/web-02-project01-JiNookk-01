@@ -3,17 +3,19 @@ package utils;
 import models.ChattingRoom.ChattingRoom;
 import models.Invitation;
 import models.Message;
+import models.Profile;
 import models.Relation.ChattingRoomMessageRelation;
 import models.Relation.UserChattingRoomRelation;
 import models.Relation.UsersRelation;
 import models.User;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Parser {
-    public User parseUser(String line) {
+    public User parseUser(String line, Profile defaultProfile) throws IOException {
         String[] words = line.split(",");
 
         long id = Long.parseLong(words[0]);
@@ -23,7 +25,7 @@ public class Parser {
         String phoneNumber = words[4];
         boolean deleted = Boolean.parseBoolean(words[5]);
 
-        User user = new User(id, username, password, nickname, phoneNumber);
+        User user = new User(id, username, password, nickname, phoneNumber, defaultProfile);
         user.setDeleted(deleted);
         return user;
     }
@@ -115,5 +117,22 @@ public class Parser {
         invitedUsers.forEach(invitedUser -> chattingRoomUserNames.add(invitedUser.name()));
 
         return String.join(",", chattingRoomUserNames);
+    }
+
+    public Profile parseProfile(String line) throws IOException {
+        String[] words = line.split(",");
+
+        long id = Long.parseLong(words[0]);
+        String profileMessage = words[1];
+        String imagePath = words[2];
+        boolean deleted = Boolean.parseBoolean(words[3]);
+
+        Profile profile = new Profile(id,deleted);
+
+        profile.updateProfileMessage(profileMessage);
+
+        profile.picture().updateImage(imagePath);
+
+        return profile;
     }
 }

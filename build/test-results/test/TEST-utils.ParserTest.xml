@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="utils.ParserTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2022-08-31T07:04:36" hostname="ojinugucBookAir" time="0.003">
+<testsuite name="utils.ParserTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2022-09-01T06:45:35" hostname="ojinugucBookAir" time="0.009">
   <properties/>
-  <testcase name="parseInvitedUsers()" classname="utils.ParserTest" time="0.001"/>
-  <testcase name="parseLine()" classname="utils.ParserTest" time="0.0"/>
-  <testcase name="parseUser()" classname="utils.ParserTest" time="0.0"/>
-  <testcase name="parseUserChattingRoomRelation()" classname="utils.ParserTest" time="0.001"/>
+  <testcase name="parseInvitedUsers()" classname="utils.ParserTest" time="0.002"/>
+  <testcase name="parseLine()" classname="utils.ParserTest" time="0.001"/>
+  <testcase name="parseUser()" classname="utils.ParserTest" time="0.001"/>
+  <testcase name="parseUserChattingRoomRelation()" classname="utils.ParserTest" time="0.0"/>
   <testcase name="parseMessage()" classname="utils.ParserTest" time="0.0"/>
-  <testcase name="parseTitle()" classname="utils.ParserTest" time="0.0"/>
-  <testcase name="parseUserRelation()" classname="utils.ParserTest" time="0.001"/>
-  <testcase name="parseChattingRoom()" classname="utils.ParserTest" time="0.0"/>
-  <testcase name="newMessage()" classname="utils.ParserTest" time="0.0"/>
+  <testcase name="parseTitle()" classname="utils.ParserTest" time="0.001"/>
+  <testcase name="parseUserRelation()" classname="utils.ParserTest" time="0.0"/>
+  <testcase name="parseChattingRoom()" classname="utils.ParserTest" time="0.001"/>
+  <testcase name="newMessage()" classname="utils.ParserTest" time="0.001"/>
+  <testcase name="parseProfile()" classname="utils.ParserTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
