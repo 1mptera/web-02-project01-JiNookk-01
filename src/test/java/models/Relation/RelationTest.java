@@ -47,6 +47,7 @@ class RelationTest {
     void requestFriend() throws IOException {
         MakaoTalk makaoTalk = new MakaoTalk();
 
+        boolean deleted = false;
         User user1 = new User(1, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted));
         User user2 = new User(2, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted));
         User user3 = new User(3, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted));
@@ -153,6 +154,7 @@ class RelationTest {
     void newUserChattingRoomRelations() throws IOException {
         Relation relation = new Relation();
 
+        boolean deleted = false;
         User user1 = new User(1, "ojw", "ojw123", "오진욱", "01085568965", new Profile(1, deleted));
         User user2 = new User(2, "ojs", "ojs123", "오진성", "01052398955", new Profile(1, deleted));
         User user3 = new User(3, "bjh", "bjh123", "배준형", "01024593050", new Profile(1, deleted));

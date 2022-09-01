@@ -16,6 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -140,10 +142,9 @@ public class ChattingRoomAddFrame extends JFrame {
             if (invitations.size() > 1) {
                 try {
                     ChattingRoom newChattingRoom = makaoTalk.newChatting(invitationList);
-//                    new AlertFrame(newChattingRoom.toString());
-//                    new AlertFrame(makaoTalk.relation().userChattingRoomRelations().toString());
-
+//
                     ChattingRoomLoader chattingRoomLoader = new ChattingRoomLoader();
+
                     chattingRoomLoader.saveUserChattingRoomRelations(makaoTalk.relation().userChattingRoomRelations());
                     chattingRoomLoader.saveChattingRooms(makaoTalk.chattingRooms());
 

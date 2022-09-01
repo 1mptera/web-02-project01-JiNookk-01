@@ -65,8 +65,8 @@ public class FriendProfileWindow extends JFrame {
 
     private JLabel profileMessageLabel() {
         JLabel label = new JLabel(friend.profile().message());
-        label.setForeground(new Color(0x9B9B9B));
         label.setFont(new Font("Serif", Font.PLAIN, 10));
+        label.setForeground(new Color(0x9B9B9B));
         label.setHorizontalAlignment(JLabel.CENTER);
         return label;
     }

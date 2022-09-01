@@ -20,6 +20,7 @@ class ParserTest {
     void parseUser() throws IOException {
         Parser parser = new Parser();
 
+        boolean deleted = false;
         Profile defaultProfile = new Profile(1, deleted);
 
         User user1 = parser.parseUser("1,ojw,ojw123,오진욱,01085568965,false", defaultProfile);
@@ -55,6 +56,7 @@ class ParserTest {
         Parser parser = new Parser();
 
         String line = "1/징성";
+        boolean deleted = false;
         List<User> users = List.of(
                 new User(1, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted)),
                 new User(2, "ojw0828", "7895123", "오진성", "01085568965", new Profile(1, deleted))
@@ -107,6 +109,7 @@ class ParserTest {
                 new Invitation(1)
         );
 
+        boolean deleted = false;
         User user1 = new User(1, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted));
         User user2 = new User(2, "ojw0828", "7895123", "오진성", "01085568965", new Profile(1, deleted));
         User user3 = new User(2, "ojw0828", "7895123", "배준형", "01085568965", new Profile(1, deleted));
@@ -130,6 +133,7 @@ class ParserTest {
         Parser parser = new Parser();
 
         List<User> invitedUsers = new ArrayList<>();
+        boolean deleted = false;
         invitedUsers.add(new User(1, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted)));
 
         String title = parser.parseChattingRoomTitle(invitedUsers);
@@ -147,7 +151,7 @@ class ParserTest {
     void parseProfile() throws IOException {
         Parser parser = new Parser();
 
-        Profile profile = parser.parseProfile("1,./src/main/resources/images/jingseong.png");
+        Profile profile = parser.parseProfile("1,,./src/main/resources/images/jingseong.png,false");
 
         assertEquals(1,profile.id());
         assertEquals("./src/main/resources/images/jingseong.png",profile.picture().imagePath());

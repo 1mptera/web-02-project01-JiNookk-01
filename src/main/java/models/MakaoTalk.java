@@ -185,6 +185,8 @@ public class MakaoTalk {
     public void newMessage(Message newMessage, ChattingRoom chattingRoom) {
         addMessage(newMessage);
 
+        chattingRoom.updatePreviewMessage(newMessage.content());
+
         relation.newChattingRoomMessageRelation(chattingRoom, newMessage);
     }
 

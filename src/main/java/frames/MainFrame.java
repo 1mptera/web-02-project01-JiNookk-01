@@ -20,7 +20,7 @@ public class MainFrame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(490, 800);
         this.setLocationRelativeTo(null);
-        this.setResizable(true);
+        this.setResizable(false);
 
         initImagePanel();
 
