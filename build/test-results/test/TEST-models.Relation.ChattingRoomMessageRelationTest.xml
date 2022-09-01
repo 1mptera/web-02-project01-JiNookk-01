@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="models.Relation.ChattingRoomMessageRelationTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2022-09-01T06:45:35" hostname="ojinugucBookAir" time="0.0">
+<testsuite name="models.Relation.ChattingRoomMessageRelationTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2022-09-01T15:36:36" hostname="ojinugucBookAir" time="0.001">
   <properties/>
-  <testcase name="chattingRoomMessageRelationTest()" classname="models.Relation.ChattingRoomMessageRelationTest" time="0.0"/>
+  <testcase name="chattingRoomMessageRelationTest()" classname="models.Relation.ChattingRoomMessageRelationTest" time="0.001"/>
   <testcase name="toCsvRow()" classname="models.Relation.ChattingRoomMessageRelationTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>

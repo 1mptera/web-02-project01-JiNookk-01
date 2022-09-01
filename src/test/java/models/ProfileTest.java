@@ -10,6 +10,7 @@ class ProfileTest {
     @Test
     void creation() throws IOException {
         long id = 1;
+        boolean deleted = false;
         Profile profile = new Profile(id, deleted);
 
         assertEquals("", profile.message());
@@ -21,7 +22,7 @@ class ProfileTest {
     @Test
     void setProfileMessage() throws IOException {
         long id = 1;
-
+        boolean deleted = false;
         Profile profile = new Profile(id, deleted);
 
         profile.updateProfileMessage("Hello");
@@ -31,17 +32,19 @@ class ProfileTest {
 
     @Test
     void toCsvRow() throws IOException {
+        boolean deleted = false;
         Profile profile1 = new Profile(1, deleted);
 
-        assertEquals("1,./src/main/resources/images/defaultProfileImage.png", profile1.toCsvRow());
+        assertEquals("1,,./src/main/resources/images/defaultProfileImage.png,false", profile1.toCsvRow());
 
         Profile profile2 = new Profile(2, deleted);
 
-        assertEquals("2,./src/main/resources/images/defaultProfileImage.png", profile2.toCsvRow());
+        assertEquals("2,,./src/main/resources/images/defaultProfileImage.png,false", profile2.toCsvRow());
     }
 
     @Test
     void delete() throws IOException {
+        boolean deleted = false;
         Profile profile = new Profile(1, deleted);
 
         profile.delete();

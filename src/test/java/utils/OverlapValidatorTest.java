@@ -15,6 +15,8 @@ class OverlapValidatorTest {
     void validateUserRelations() throws IOException {
         OverlapValidator overlapValidator = new OverlapValidator();
 
+        boolean deleted = false;
+
         User user1 = new User(1, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted));
         User user2 = new User(2, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted));
         User user3 = new User(3, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted));

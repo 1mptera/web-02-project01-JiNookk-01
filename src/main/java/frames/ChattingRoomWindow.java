@@ -5,6 +5,7 @@ import models.MakaoTalk;
 import models.Message;
 import models.Profile;
 import models.User;
+import utils.loader.ChattingRoomLoader;
 import utils.loader.MessageLoader;
 
 import javax.swing.ImageIcon;
@@ -19,13 +20,17 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 public class ChattingRoomWindow extends JFrame {
     private final MakaoTalk makaoTalk;
     private final ChattingRoom chattingRoom;
+
     private JTextField inputMessageTextField;
     private JPanel scrollMessagesPanel;
+    private JPanel chattingRoomContainer;
 
     public ChattingRoomWindow(MakaoTalk makaoTalk, ChattingRoom chattingRoom) throws IOException {
         this.makaoTalk = makaoTalk;
@@ -35,35 +40,84 @@ public class ChattingRoomWindow extends JFrame {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(400, 500);
         this.add(chattingRoomContainer());
+        this.setResizable(false);
 
         showScrollMessagesPanel();
         showScrollMessages();
     }
 
     private JPanel chattingRoomContainer() throws IOException {
-        JPanel panel = new JPanel();
-        panel.setBackground(new Color(25,25,25));
-        panel.setLayout(new BorderLayout());
-        panel.add(chattingRoomTitlePanel(), BorderLayout.NORTH);
-        panel.add(scrollMessagePanel());
-        panel.add(inputMessagePanel(), BorderLayout.SOUTH);
-        return panel;
+        chattingRoomContainer = new JPanel();
+        updateChattingRoom();
+        return chattingRoomContainer;
+    }
+
+    private void updateChattingRoom() throws IOException {
+        chattingRoomContainer.removeAll();
+        chattingRoomContainer.setBackground(new Color(25, 25, 25));
+        chattingRoomContainer.setLayout(new BorderLayout());
+        chattingRoomContainer.add(chattingRoomTitlePanel(), BorderLayout.NORTH);
+        chattingRoomContainer.add(scrollMessagePanel());
+        chattingRoomContainer.add(inputMessagePanel(), BorderLayout.SOUTH);
     }
 
     private JScrollPane scrollMessagePanel() {
         scrollMessagesPanel = new JPanel();
-        scrollMessagesPanel.setBackground(new Color(25,25,25));
-        JScrollPane messageScrollPane = new JScrollPane(scrollMessagesPanel);
-        return messageScrollPane;
+        scrollMessagesPanel.setBackground(new Color(25, 25, 25));
+        return new JScrollPane(scrollMessagesPanel);
     }
 
     private JPanel chattingRoomTitlePanel() throws IOException {
         JPanel panel = new JPanel();
         panel.setOpaque(false);
+        panel.setLayout(new BorderLayout());
+        panel.add(titleAndProfilePicturePanel(), BorderLayout.WEST);
+        panel.add(editChattingRoomPanel(), BorderLayout.EAST);
+        return panel;
+    }
+
+    private JPanel editChattingRoomPanel() {
+        // TODO : 채팅방 이름 변경, 채팅방 나가기 버튼 구현
+        JPanel panel = new JPanel();
+        panel.setOpaque(false);
+        panel.add(renameChattingRoomButton());
+        return panel;
+    }
+
+    private JButton renameChattingRoomButton() {
+        JButton button = new JButton("채팅방 이름 변경");
+        button.addActionListener(event -> {
+            try {
+                JFrame renameChattingRoomWindow = new RenameChattingRoomFrame(chattingRoom, button);
+                renameChattingRoomWindow.setVisible(true);
+
+                renameChattingRoomWindow.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosed(WindowEvent e) {
+                        try {
+                            updateChattingRoom();
+
+                            new ChattingRoomLoader().saveChattingRooms(makaoTalk.chattingRooms());
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+
+                        scrollMessagesPanel.setVisible(false);
+                        scrollMessagesPanel.setVisible(true);
+                    }
+                });
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        return button;
+    }
+
+    private JPanel titleAndProfilePicturePanel() throws IOException {
+        JPanel panel = new JPanel();
+        panel.setOpaque(false);
         panel.add(profilePicturePanel());
         panel.add(titleAndPreviewMessagePanel());
-
-        // TODO : 채팅방 이름 변경, 채팅방 나가기 버튼 구현
         return panel;
     }
 
@@ -72,7 +126,7 @@ public class ChattingRoomWindow extends JFrame {
         panel.setOpaque(false);
         JLabel profilePictureLabel =
                 new JLabel(chattingRoom.invitedUsers().get(0).
-                        profile().picture().profilePicture(Profile.PROFILEWIDTH,Profile.PROFILEHEIGHT));
+                        profile().picture().profilePicture(Profile.PROFILEWIDTH, Profile.PROFILEHEIGHT));
         panel.add(profilePictureLabel);
         return panel;
     }
@@ -132,6 +186,8 @@ public class ChattingRoomWindow extends JFrame {
                     Message newMessage = loginUser.sendMessageToSystem(content);
 
                     makaoTalk.newMessage(newMessage, chattingRoom);
+
+                    new ChattingRoomLoader().saveChattingRooms(makaoTalk.chattingRooms());
 
                     messageLoader.saveMessage(makaoTalk.messages());
 

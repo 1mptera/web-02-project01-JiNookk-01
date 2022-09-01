@@ -49,6 +49,7 @@ public class Parser {
 
         long id = Long.parseLong(words[0]);
         String title = words[1];
+        String previewMessage = words[2];
 
         List<UserChattingRoomRelation> inviteds = userToChattingRoomRelations.stream()
                 .filter(userChattingRoomRelation -> userChattingRoomRelation.chattingRoomId() == id)
@@ -64,7 +65,9 @@ public class Parser {
             }
         }
 
-        return new ChattingRoom(id, title, invitedUser);
+        ChattingRoom chattingRoom = new ChattingRoom(id, title, invitedUser);
+        chattingRoom.updatePreviewMessage(previewMessage);
+        return chattingRoom;
     }
 
     public UserChattingRoomRelation parseUserChattingRoomRelation(String line) {

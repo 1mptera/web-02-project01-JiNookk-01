@@ -15,7 +15,7 @@ public class SelectChattingFrame extends JFrame {
 
         this.add(normalChatting(), BorderLayout.NORTH);
         this.add(secretChatting());
-        this.add(openChatting(),BorderLayout.SOUTH);
+        this.add(openChatting(), BorderLayout.SOUTH);
 
         this.setLocationRelativeTo(null);
         this.pack();
@@ -24,7 +24,7 @@ public class SelectChattingFrame extends JFrame {
     private JButton normalChatting() {
         JButton button = new JButton("일반 채팅");
         button.addActionListener(event -> {
-            JFrame chattingRoomAddWindow = new ChattingRoomAddFrame(makaoTalk,this);
+            JFrame chattingRoomAddWindow = new ChattingRoomAddFrame(makaoTalk, this);
 
             chattingRoomAddWindow.setVisible(true);
         });
@@ -33,6 +33,9 @@ public class SelectChattingFrame extends JFrame {
 
     private JButton secretChatting() {
         JButton button = new JButton("비밀 채팅");
+        button.addActionListener(event -> {
+
+        });
         return button;
     }
 

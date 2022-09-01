@@ -133,7 +133,7 @@ public class ModifyUserInformationPanel extends JPanel {
         JPanel panel = new JPanel();
         panel.setOpaque(false);
         panel.setLayout(new BorderLayout());
-        panel.setPreferredSize(new Dimension(130, 0));
+        panel.setPreferredSize(new Dimension(100, 0));
         panel.add(profilePictureLabel());
         panel.add(editProfileButton(), BorderLayout.SOUTH);
         return panel;

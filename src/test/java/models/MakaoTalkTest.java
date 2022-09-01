@@ -17,6 +17,7 @@ class MakaoTalkTest {
 
         List<User> users = makaoTalk.undeletedUsers();
 
+        boolean deleted = false;
         User user1 = new User(1, "ojw0828", "1", "오진욱", "01085568965", new Profile(1, deleted));
 
         makaoTalk.addUser(user1);
@@ -34,6 +35,7 @@ class MakaoTalkTest {
     void currentUser() throws IOException {
         MakaoTalk makaoTalk = new MakaoTalk();
 
+        boolean deleted = false;
         User loginUser = new User(1, "ojw0828", "1", "오진욱", "01085568965", new Profile(1, deleted));
 
         makaoTalk.updateLoginUserId(loginUser.id());
@@ -49,6 +51,7 @@ class MakaoTalkTest {
         messages.add(new Message(1, "hi", "20220828", 1));
         messages.add(new Message(1, "why", "20220828", 2));
 
+        boolean deleted = false;
         User currentUser = new User(1, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted));
         User otherUser = new User(2, "ojs0828", "9645123", "오진성", "01052398955", new Profile(1, deleted));
 
@@ -78,6 +81,7 @@ class MakaoTalkTest {
     void login() throws IOException {
         MakaoTalk makaoTalk = new MakaoTalk();
 
+        boolean deleted = false;
         User loginUser1 = new User(1, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted));
 
         makaoTalk.login(loginUser1.id());
@@ -97,6 +101,7 @@ class MakaoTalkTest {
     void user() throws IOException {
         MakaoTalk makaoTalk = new MakaoTalk();
 
+        boolean deleted = false;
         makaoTalk.addUser(new User(1, "ojw", "ojw123", "오진욱", "01085568965", new Profile(1, deleted)));
         makaoTalk.addUser(new User(2, "ojs", "ojw123", "오진성", "01085568965", new Profile(1, deleted)));
         makaoTalk.addUser(new User(3, "oja", "ojw123", "오진어", "01085568965", new Profile(1, deleted)));
@@ -110,6 +115,7 @@ class MakaoTalkTest {
     void messageOwnerName() throws IOException {
         MakaoTalk makaoTalk = new MakaoTalk();
 
+        boolean deleted = false;
         makaoTalk.addUser(new User(1, "ojw", "ojw123", "오진욱", "01085568965", new Profile(1, deleted)));
         makaoTalk.addUser(new User(2, "ojs", "ojw123", "오진성", "01085568965", new Profile(1, deleted)));
         makaoTalk.addUser(new User(3, "oja", "ojw123", "오진어", "01085568965", new Profile(1, deleted)));
@@ -123,6 +129,7 @@ class MakaoTalkTest {
     void newChattingRoom() throws IOException {
         MakaoTalk makaoTalk = new MakaoTalk();
 
+        boolean deleted = false;
         makaoTalk.addUser(new User(1, "ojw", "ojw123", "오진욱", "01085568965", new Profile(1, deleted)));
         makaoTalk.addUser(new User(2, "ojs", "ojw123", "오진성", "01085568965", new Profile(1, deleted)));
         makaoTalk.addUser(new User(3, "oja", "ojw123", "오진어", "01085568965", new Profile(1, deleted)));
@@ -156,6 +163,7 @@ class MakaoTalkTest {
         makaoTalk.relation().addUserChattingRoomRelation(new UserChattingRoomRelation(2, 3));
         makaoTalk.relation().addUserChattingRoomRelation(new UserChattingRoomRelation(3, 3));
 
+        boolean deleted = false;
         User user1 = new User(1, "ojw", "ojw123", "오진욱", "01085568965", new Profile(1, deleted));
         User user2 = new User(2, "ojs", "ojs123", "오진성", "01052398955", new Profile(1, deleted));
         User user3 = new User(3, "bjh", "bjh123", "배준형", "01024593050", new Profile(1, deleted));

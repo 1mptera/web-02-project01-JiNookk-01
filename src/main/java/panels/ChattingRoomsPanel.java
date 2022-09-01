@@ -5,7 +5,6 @@ import models.ChattingRoom.ChattingRoom;
 import models.MakaoTalk;
 import models.Profile;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,29 +16,38 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 public class ChattingRoomsPanel extends JPanel {
     private MakaoTalk makaoTalk;
+    private JPanel contentPanel;
+    private JPanel chattingRoomsContainer;
 
-    public ChattingRoomsPanel(MakaoTalk makaoTalk) throws IOException {
+    public ChattingRoomsPanel(MakaoTalk makaoTalk, JPanel contentPanel) throws IOException {
         this.makaoTalk = makaoTalk;
+        this.contentPanel = contentPanel;
 
         this.setOpaque(false);
         this.add(chattingRoomsContainer());
     }
 
     private JPanel chattingRoomsContainer() throws IOException {
-        JPanel panel = new JPanel();
-        panel.setOpaque(false);
-        panel.setLayout(new GridLayout(makaoTalk.relativeChattingRooms().size(),1));
+        chattingRoomsContainer = new JPanel();
+        chattingRoomsContainer.setOpaque(false);
+        chattingRoomsContainer.setLayout(new GridLayout(makaoTalk.relativeChattingRooms().size(),1));
 
+        addChattingRoomPanels();
+
+        return chattingRoomsContainer;
+    }
+
+    private void addChattingRoomPanels() throws IOException {
+        chattingRoomsContainer.removeAll();
         for (ChattingRoom chattingRoom : makaoTalk.relativeChattingRooms()) {
-            panel.add(chattingRoomPanel(chattingRoom));
+            chattingRoomsContainer.add(chattingRoomPanel(chattingRoom));
         }
-        return panel;
     }
 
     private JPanel chattingRoomPanel(ChattingRoom chattingRoom) throws IOException {
@@ -58,6 +66,19 @@ public class ChattingRoomsPanel extends JPanel {
                 try {
                     JFrame chattingRoomWindow = new ChattingRoomWindow(makaoTalk, chattingRoom);
                     chattingRoomWindow.setVisible(true);
+                    chattingRoomWindow.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosed(WindowEvent e) {
+                            try {
+                                addChattingRoomPanels();
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
+                            }
+
+                            contentPanel.setVisible(false);
+                            contentPanel.setVisible(true);
+                        }
+                    });
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -84,8 +105,8 @@ public class ChattingRoomsPanel extends JPanel {
 
     private JLabel previewMessageLabel(ChattingRoom chattingRoom) {
         JLabel label = new JLabel(chattingRoom.previewMessage());
-        label.setFont(new Font("Serif", Font.PLAIN, 10));
-        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setForeground(new Color(0x9B9B9B));
+        label.setFont(new Font("Serif", Font.PLAIN, 12));
         return label;
     }
 

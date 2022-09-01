@@ -13,6 +13,7 @@ class UserTest {
     @Test
     void creation() throws IOException {
         long id = 1;
+        boolean deleted = false;
         Profile profile = new Profile(id, deleted);
         User user = new User(1, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted));
 
@@ -28,6 +29,7 @@ class UserTest {
     void sendMessage() throws IOException {
         List<Message> messages = new ArrayList<>();
 
+        boolean deleted = false;
         User currentUser = new User(1, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted));
         User otherUser = new User(2, "ojs0828", "9645123", "오진성", "01076308965", new Profile(1, deleted));
 
@@ -45,6 +47,7 @@ class UserTest {
 
     @Test
     void toCsvRow() throws IOException {
+        boolean deleted = false;
         User user = new User(1, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted));
 
         String line = user.toCsvRow();

@@ -109,7 +109,7 @@ public class ButtonPanel extends JPanel {
         setDefaultContentPanelSetting();
         contentPanel.add(chattingRoomsToolPanel(), BorderLayout.NORTH);
 
-        JPanel chattingRoomsPanel = new ChattingRoomsPanel(makaoTalk);
+        JPanel chattingRoomsPanel = new ChattingRoomsPanel(makaoTalk,contentPanel);
         contentPanel.add(chattingRoomsPanel);
 
         showImagePanel();
