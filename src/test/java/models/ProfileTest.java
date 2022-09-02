@@ -15,7 +15,6 @@ class ProfileTest {
 
         assertEquals("", profile.message());
         assertNotNull(profile.picture());
-        assertNull(profile.music());
         assertEquals(false,profile.deleted());
     }
 

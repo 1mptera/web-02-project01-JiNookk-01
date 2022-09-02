@@ -26,7 +26,7 @@ public class FriendAddFrame extends JFrame {
     private JTextField inputIdField;
 
     private String mode = "PhoneNumber";
-    private MakaoTalk makaoTalk;
+    private final MakaoTalk makaoTalk;
     private JPanel contentPanel;
 
     public FriendAddFrame(MakaoTalk makaoTalk, JPanel contentPanel) {
@@ -44,7 +44,7 @@ public class FriendAddFrame extends JFrame {
         addFriendPanel = new JPanel();
         addFriendPanel.setBackground(new Color(45,45,45));
         addFriendPanel.setLayout(new BorderLayout());
-        addFriendPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20));
+        addFriendPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         addFriendPanel.add(addFriendMenuPanel(), BorderLayout.NORTH);
         addFriendPanel.add(inputFriendsInformationPanel());
         addFriendPanel.add(addFriendButton(), BorderLayout.SOUTH);

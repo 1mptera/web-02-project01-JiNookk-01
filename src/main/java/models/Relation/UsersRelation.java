@@ -4,8 +4,8 @@ package models.Relation;
 // 유저 - 유저, 유저 - 메시지, 유저 - 채팅방, 채팅방 - 메시지
 
 public class UsersRelation {
-    private long myId;
-    private long friendId;
+    private final long myId;
+    private final long friendId;
 
     public UsersRelation(long myId, long friendId) {
         this.myId = myId;

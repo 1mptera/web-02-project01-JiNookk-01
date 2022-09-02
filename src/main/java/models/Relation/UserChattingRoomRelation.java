@@ -4,8 +4,8 @@ package models.Relation;
 //  유저 - 채팅방
 
 public class UserChattingRoomRelation {
-    private long userId;
-    private long chattingRoomId;
+    private final long userId;
+    private final long chattingRoomId;
 
     public UserChattingRoomRelation(long userId, long chattingRoomId) {
         this.userId = userId;

@@ -42,6 +42,10 @@ public class User {
         return nickName;
     }
 
+    public String phoneNumber() {
+        return phoneNumber;
+    }
+
     public Profile profile() {
         return profile;
     }
@@ -66,8 +70,18 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public String phoneNumber() {
-        return phoneNumber;
+    public void loadProfile(Profile profile) {
+        this.profile = profile;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public void deleteID() {
+        deleted = true;
+
+        profile.delete();
     }
 
     public Message sendMessageToSystem(String content) throws FileNotFoundException {
@@ -80,22 +94,13 @@ public class User {
         return parser.newMessage(content, time, id);
     }
 
-    public void loadProfile(Profile profile) {
-        this.profile = profile;
-    }
-
     public String toCsvRow() {
         return id + "," + userName + "," + passWord + "," + nickName + "," + phoneNumber + "," +deleted;
     }
 
-    public void deleteID() {
-        deleted = true;
-
-        profile.delete();
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
+    @Override
+    public int hashCode() {
+        return 0;
     }
 
     @Override

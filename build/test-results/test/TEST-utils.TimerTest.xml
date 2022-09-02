@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="utils.TimerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-09-02T01:39:56" hostname="ojin-ug-ui-MacBookAir.local" time="0.003">
+<testsuite name="utils.TimerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-09-02T03:48:06" hostname="ojinugucBookAir" time="0.004">
   <properties/>
-  <testcase name="currentTime()" classname="utils.TimerTest" time="0.003"/>
+  <testcase name="currentTime()" classname="utils.TimerTest" time="0.004"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
