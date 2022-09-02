@@ -8,6 +8,8 @@ import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import java.io.IOException;
+
 public class SelectChattingFrame extends JFrame {
     private MakaoTalk makaoTalk;
 
@@ -17,7 +19,6 @@ public class SelectChattingFrame extends JFrame {
 
         this.add(normalChatting(), BorderLayout.NORTH);
         this.add(secretChatting());
-        this.add(openChatting(), BorderLayout.SOUTH);
 
         this.setLocationRelativeTo(null);
         this.pack();
@@ -26,7 +27,11 @@ public class SelectChattingFrame extends JFrame {
     private JButton normalChatting() {
         JButton button = new JButton("일반 채팅");
         button.addActionListener(event -> {
-            openChattingRoom("일반");
+            try {
+                openChattingRoom("일반");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
         return button;
     }
@@ -34,12 +39,17 @@ public class SelectChattingFrame extends JFrame {
     private JButton secretChatting() {
         JButton button = new JButton("비밀 채팅");
         button.addActionListener(event -> {
-            openChattingRoom("비밀");
+            try {
+                openChattingRoom("비밀");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
         return button;
     }
 
-    private void openChattingRoom(String type) {
+
+    private void openChattingRoom(String type) throws IOException {
         JFrame chattingRoomAddWindow = new ChattingRoomAddFrame(makaoTalk, type);
 
         chattingRoomAddWindow.setVisible(true);

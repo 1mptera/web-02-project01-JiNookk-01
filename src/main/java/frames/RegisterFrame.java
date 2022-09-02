@@ -121,8 +121,8 @@ public class RegisterFrame extends JFrame {
                     new UserLoader().saveUsers(makaoTalk.users());
 
                     new ProfileLoader().saveProfiles(makaoTalk.profiles());
-//                    JFrame alertFrame = new AlertFrame("회원가입이 완료되었습니다!");
-                    JFrame alertFrame = new AlertFrame(makaoTalk.undeletedProfiles().toString());
+                    JFrame alertFrame = new AlertFrame("회원가입이 완료되었습니다!");
+
                     alertFrame.setVisible(true);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
