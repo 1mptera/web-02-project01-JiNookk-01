@@ -41,6 +41,11 @@ public class Message {
     }
 
     @Override
+    public int hashCode() {
+        return 0;
+    }
+
+    @Override
     public boolean equals(Object other) {
         Message otherMessage = (Message) other;
 

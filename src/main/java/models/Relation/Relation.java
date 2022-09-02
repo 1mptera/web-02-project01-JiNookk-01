@@ -20,15 +20,38 @@ public class Relation {
     private long currentChattingRoomId;
 
     public List<UsersRelation> usersRelations() {
-        return usersRelations;
+        return new ArrayList<>(usersRelations);
     }
 
     public List<UserChattingRoomRelation> userChattingRoomRelations() {
-        return userToChattingRoomRelations;
+        return new ArrayList<>(userToChattingRoomRelations);
+    }
+
+    public List<ChattingRoomMessageRelation> chattingRoomMessageRelations() {
+        return new ArrayList<>(chattingRoomMessageRelations);
     }
 
     public long loginUserId() {
         return loginUserId;
+    }
+
+    public List<UsersRelation> loginUserFriends() {
+        return usersRelations.stream()
+                .filter(usersRelation -> usersRelation.myId() == loginUserId)
+                .toList();
+    }
+
+    public List<ChattingRoomMessageRelation> currentChattingRoomMessageRelations() {
+        return chattingRoomMessageRelations.stream()
+                .filter(chattingRoomMessageRelation
+                        -> chattingRoomMessageRelation.chattingRoomId() == currentChattingRoomId)
+                .toList();
+    }
+
+    public List<UserChattingRoomRelation> loginUserChattingRoomRelations() {
+        return userToChattingRoomRelations.stream()
+                .filter(userChattingRoomRelation -> userChattingRoomRelation.userId() == loginUserId)
+                .toList();
     }
 
     public void loadUserRelations() throws FileNotFoundException {
@@ -67,39 +90,16 @@ public class Relation {
         addUsersRelation(usersRelation);
     }
 
-    public List<UsersRelation> loginUserFriends() {
-        return usersRelations.stream()
-                .filter(usersRelation -> usersRelation.myId() == loginUserId)
-                .toList();
-    }
-
-    public List<UserChattingRoomRelation> loginUserChattingRoomRelations() {
-        return userToChattingRoomRelations.stream()
-                .filter(userChattingRoomRelation -> userChattingRoomRelation.userId() == loginUserId)
-                .toList();
-    }
-
     public void updateloginUserId(long loginUserId) {
         this.loginUserId = loginUserId;
     }
 
-    public void newChattingRoomMessageRelation(ChattingRoom chattingRoom, Message newMessage) {
-        addChattingRoomMessageRelation(new ChattingRoomMessageRelation(chattingRoom.id(), newMessage.id()));
-    }
-
-    public List<ChattingRoomMessageRelation> chattingRoomMessageRelations() {
-        return chattingRoomMessageRelations;
-    }
-
-    public List<ChattingRoomMessageRelation> currentChattingRoomMessageRelations() {
-        return chattingRoomMessageRelations.stream()
-                .filter(chattingRoomMessageRelation
-                        -> chattingRoomMessageRelation.chattingRoomId() == currentChattingRoomId)
-                .toList();
-    }
-
     public void updateCurrentChattingRoom(long currentChattingRoomId) {
         this.currentChattingRoomId = currentChattingRoomId;
+    }
+
+    public void newChattingRoomMessageRelation(ChattingRoom chattingRoom, Message newMessage) {
+        addChattingRoomMessageRelation(new ChattingRoomMessageRelation(chattingRoom.id(), newMessage.id()));
     }
 
     public void newUserChattingRoomRelations(ChattingRoom newChatting) {

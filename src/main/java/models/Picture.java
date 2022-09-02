@@ -21,8 +21,8 @@ public class Picture {
         return imagePath;
     }
 
-    public void updateImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public ImageIcon profileImageIcon() {
+        return profileImageIcon;
     }
 
     public ImageIcon profilePicture(int width, int height) throws IOException {
@@ -32,8 +32,8 @@ public class Picture {
         return new ImageIcon(profileImage);
     }
 
-    public ImageIcon profileImageIcon() {
-        return profileImageIcon;
+    public void updateImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public void updateImage(String imagePath) throws IOException {

@@ -15,7 +15,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -29,8 +28,6 @@ public class ChattingRoomAddFrame extends JFrame {
     private final MakaoTalk makaoTalk;
     private List<Invitation> invitations;
     private String type;
-
-    private JTextField searchFriendNameField;
 
     public ChattingRoomAddFrame(MakaoTalk makaoTalk, String type) throws IOException {
         this.makaoTalk = makaoTalk;
@@ -57,7 +54,7 @@ public class ChattingRoomAddFrame extends JFrame {
     private JPanel inviteContainer() throws IOException {
         JPanel panel = new JPanel();
         panel.setBackground(new Color(45,45,45));
-        panel.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20));
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         panel.setLayout(new BorderLayout());
 
         panel.add(searchPanel(), BorderLayout.NORTH);
@@ -132,7 +129,6 @@ public class ChattingRoomAddFrame extends JFrame {
         panel.setOpaque(false);
         panel.setLayout(new GridLayout(2,1));
         panel.add(inviteTitleLabel());
-        panel.add(searchFriendNameField());
         return panel;
     }
 
@@ -142,12 +138,6 @@ public class ChattingRoomAddFrame extends JFrame {
         label.setForeground(new Color(0xEFEBEB));
         label.setHorizontalAlignment(JLabel.CENTER);
         return label;
-    }
-
-    private JTextField searchFriendNameField() {
-        searchFriendNameField = new JTextField(10);
-        searchFriendNameField.setText("이름으로 검색");
-        return searchFriendNameField;
     }
 
     private JPanel inviteButtonPanel() {
@@ -168,7 +158,7 @@ public class ChattingRoomAddFrame extends JFrame {
             if (invitations.size() > 1) {
                 try {
                     ChattingRoom newChattingRoom = makaoTalk.newChatting(invitationList,type);
-//
+
                     ChattingRoomLoader chattingRoomLoader = new ChattingRoomLoader();
 
                     chattingRoomLoader.saveUserChattingRoomRelations(makaoTalk.relation().userChattingRoomRelations());

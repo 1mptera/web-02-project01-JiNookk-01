@@ -16,7 +16,6 @@ public class Profile {
     private long id;
     private String message = "";
     private Picture picture;
-    private Music music = null;
     private boolean deleted;
 
     public Profile(long id, boolean deleted) throws IOException {
@@ -35,10 +34,6 @@ public class Profile {
 
     public Picture picture() {
         return picture;
-    }
-
-    public Music music() {
-        return music;
     }
 
     public boolean deleted() {
@@ -71,7 +66,7 @@ public class Profile {
 
     @Override
     public String toString() {
-        return "프로필 메시지: " + message + ", 프로필 사진: " + picture +
-                ", 프로필 음악: " + music;
+        return "프로필 메시지: " + message + ", 프로필 사진: " + picture;
+
     }
 }

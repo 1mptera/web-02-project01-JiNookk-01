@@ -20,12 +20,12 @@ public class Invitation {
         this.checked = checked;
     }
 
+    public void defalutInvitation() {
+        checked = true;
+    }
+
     @Override
     public String toString() {
         return "초대된 유저 ID : " + userId;
-    }
-
-    public void defalutInvitation() {
-        checked = true;
     }
 }

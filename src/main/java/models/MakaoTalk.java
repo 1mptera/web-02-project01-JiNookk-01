@@ -35,12 +35,11 @@ public class MakaoTalk {
                 .toList();
     }
 
-    public List<ChattingRoom> chattingRooms() {
-        return new ArrayList<>(chattingRooms);
-    }
-
-    public List<Message> messages() {
-        return new ArrayList<>(messages);
+    public User user(long friendId) {
+        return users.stream()
+                .filter(user -> user.id() == friendId)
+                .toList()
+                .get(0);
     }
 
     public List<Profile> profiles() {
@@ -53,6 +52,14 @@ public class MakaoTalk {
                 .toList();
     }
 
+    public List<ChattingRoom> chattingRooms() {
+        return new ArrayList<>(chattingRooms);
+    }
+
+    public List<Message> messages() {
+        return new ArrayList<>(messages);
+    }
+
     public Relation relation() {
         return relation;
     }
@@ -61,53 +68,82 @@ public class MakaoTalk {
         return loginUserId;
     }
 
+    public String messageOwnerName(Message message) {
+        User messageOwner = users.stream()
+                .filter(user -> user.id() == message.userId())
+                .toList()
+                .get(0);
+
+        return messageOwner.name();
+    }
+
+    public List<ChattingRoom> relativeChattingRooms() {
+        List<UserChattingRoomRelation> loginUserChattingRooms = relation.loginUserChattingRoomRelations();
+
+        List<ChattingRoom> relativeChattingRooms = chattingRooms.stream()
+                .filter(relativeChattingRoom -> loginUserChattingRooms.stream()
+                        .anyMatch(loginUserChattingRoom ->
+                                loginUserChattingRoom.chattingRoomId() == relativeChattingRoom.id()))
+                .toList();
+
+        return new ArrayList<>(relativeChattingRooms);
+    }
+
+    public List<Message> currentChattingRoomMessages() {
+        List<Message> currentChattingRoomMessages = messages.stream()
+                .filter(message -> relation.currentChattingRoomMessageRelations().stream()
+                        .anyMatch(chattingRoomMessageRelation
+                                -> chattingRoomMessageRelation.messageId() == message.id()))
+                .toList();
+        return new ArrayList<>(currentChattingRoomMessages);
+    }
+
     public void updateLoginUserId(long loginUserId) {
         this.loginUserId = loginUserId;
+    }
+
+    public void loadUsers() throws IOException {
+        UserLoader userLoader = new UserLoader();
+
+        users = userLoader.loadUsers();
+    }
+
+    public void loadProfiles() throws IOException {
+        ProfileLoader profileLoader = new ProfileLoader();
+
+        profiles = profileLoader.loadProfiles();
+
+        for (int i = 0, profilesSize = profiles.size(); i < profilesSize; i += 1) {
+            users.get(i).loadProfile(profiles.get(i));
+        }
+    }
+
+    public void loadChattingRooms() throws FileNotFoundException {
+        ChattingRoomLoader chattingRoomLoader = new ChattingRoomLoader();
+
+        chattingRooms = chattingRoomLoader.loadChattingRoom(users, relation.userChattingRoomRelations());
+    }
+
+    public void loadMessages() throws FileNotFoundException {
+        MessageLoader messageLoader = new MessageLoader();
+
+        messages = messageLoader.loadMessages();
     }
 
     public void addUser(User user) {
         users.add(user);
     }
 
-    public void addChattingRoom(ChattingRoom chattingRoom) {
-        chattingRooms.add(chattingRoom);
-    }
-
-    public User user(long friendId) {
-        return users.stream()
-                .filter(user -> user.id() == friendId)
-                .toList()
-                .get(0);
-    }
-
-    public void register(String userName, String password, String nickName, String phoneNumber) throws IOException {
-        Parser parser = new Parser();
-
-        IDGenerator idGenerator = new IDGenerator();
-
-        long id = idGenerator.newUserId();
-
-        boolean deleted = false;
-
-        String line = parser.parseLine(id, userName, password, nickName, phoneNumber, deleted);
-
-        Profile defaultProfile = new Profile(id, deleted);
-
-        User user = parser.parseUser(line,defaultProfile);
-
-        addProfile(defaultProfile);
-
-        addUser(user);
-    }
-
     private void addProfile(Profile defaultProfile) {
         profiles.add(defaultProfile);
     }
 
-    public void login(long loginUserId) {
-        this.loginUserId = loginUserId;
+    public void addChattingRoom(ChattingRoom chattingRoom) {
+        chattingRooms.add(chattingRoom);
+    }
 
-        relation.updateloginUserId(loginUserId);
+    public void addMessage(Message newMessage) {
+        messages.add(newMessage);
     }
 
     public ChattingRoom newChatting(List<Invitation> invitations,String type) throws FileNotFoundException {
@@ -140,59 +176,6 @@ public class MakaoTalk {
         return newChatting;
     }
 
-    public void loadProfiles() throws IOException {
-        ProfileLoader profileLoader = new ProfileLoader();
-
-        profiles = profileLoader.loadProfiles();
-
-        for (int i = 0, profilesSize = profiles.size(); i < profilesSize; i += 1) {
-            users.get(i).loadProfile(profiles.get(i));
-        }
-    }
-
-    public void loadUsers() throws IOException {
-        UserLoader userLoader = new UserLoader();
-
-        users = userLoader.loadUsers();
-    }
-
-    public void loadChattingRooms() throws FileNotFoundException {
-        ChattingRoomLoader chattingRoomLoader = new ChattingRoomLoader();
-
-        chattingRooms = chattingRoomLoader.loadChattingRoom(users, relation.userChattingRoomRelations());
-    }
-
-    public void loadMessages() throws FileNotFoundException {
-        MessageLoader messageLoader = new MessageLoader();
-
-        messages = messageLoader.loadMessages();
-    }
-
-    public void addMessage(Message newMessage) {
-        messages.add(newMessage);
-    }
-
-    public String messageOwnerName(Message message) {
-        User messageOwner = users.stream()
-                .filter(user -> user.id() == message.userId())
-                .toList()
-                .get(0);
-
-        return messageOwner.name();
-    }
-
-    public List<ChattingRoom> relativeChattingRooms() {
-        List<UserChattingRoomRelation> loginUserChattingRooms = relation.loginUserChattingRoomRelations();
-
-        List<ChattingRoom> relativeChattingRooms = chattingRooms.stream()
-                .filter(relativeChattingRoom -> loginUserChattingRooms.stream()
-                        .anyMatch(loginUserChattingRoom ->
-                                loginUserChattingRoom.chattingRoomId() == relativeChattingRoom.id()))
-                .toList();
-
-        return new ArrayList<>(relativeChattingRooms);
-    }
-
     public void newMessage(Message newMessage, ChattingRoom chattingRoom) {
         addMessage(newMessage);
 
@@ -201,13 +184,30 @@ public class MakaoTalk {
         relation.newChattingRoomMessageRelation(chattingRoom, newMessage);
     }
 
-    public List<Message> currentChattingRoomMessages() {
-        List<Message> currentChattingRoomMessages = messages.stream()
-                .filter(message -> relation.currentChattingRoomMessageRelations().stream()
-                        .anyMatch(chattingRoomMessageRelation
-                                -> chattingRoomMessageRelation.messageId() == message.id()))
-                .toList();
-        return new ArrayList<>(currentChattingRoomMessages);
+    public void login(long loginUserId) {
+        this.loginUserId = loginUserId;
+
+        relation.updateloginUserId(loginUserId);
+    }
+
+    public void register(String userName, String password, String nickName, String phoneNumber) throws IOException {
+        Parser parser = new Parser();
+
+        IDGenerator idGenerator = new IDGenerator();
+
+        long id = idGenerator.newUserId();
+
+        boolean deleted = false;
+
+        String line = parser.parseLine(id, userName, password, nickName, phoneNumber, deleted);
+
+        Profile defaultProfile = new Profile(id, deleted);
+
+        User user = parser.parseUser(line,defaultProfile);
+
+        addProfile(defaultProfile);
+
+        addUser(user);
     }
 
     public void openChattingRoom(long currentChattingRoomId) {

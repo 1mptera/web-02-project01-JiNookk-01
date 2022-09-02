@@ -8,9 +8,12 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -19,6 +22,7 @@ public class ButtonPanel extends JPanel {
     private MakaoTalk makaoTalk;
     private JPanel imagePanel;
     private JPanel contentPanel;
+    private JPanel friendsToolPanel;
 
     public ButtonPanel(MakaoTalk makaoTalk, JPanel imagePanel, JPanel contentPanel) throws IOException {
         this.makaoTalk = makaoTalk;
@@ -59,16 +63,10 @@ public class ButtonPanel extends JPanel {
     }
 
     private JPanel friendsToolPanel() {
-        JPanel panel = new JPanel();
-        panel.setOpaque(false);
-        panel.add(friendFindButton());
-        panel.add(addFriendButton());
-        return panel;
-    }
-
-    private JButton friendFindButton() {
-        JButton button = new JButton("찾기");
-        return button;
+        friendsToolPanel = new JPanel();
+        friendsToolPanel.setOpaque(false);
+        friendsToolPanel.add(addFriendButton());
+        return friendsToolPanel;
     }
 
     private JButton addFriendButton() {
@@ -118,15 +116,10 @@ public class ButtonPanel extends JPanel {
     private JPanel chattingRoomsToolPanel() {
         JPanel panel = new JPanel();
         panel.setOpaque(false);
-        panel.add(chattingRoomsFindButton());
         panel.add(addChattingRoomButton());
         return panel;
     }
 
-    private JButton chattingRoomsFindButton() {
-        JButton button = new JButton("찾기");
-        return button;
-    }
 
     private JButton addChattingRoomButton() {
         JButton button = new JButton("채팅 추가");
