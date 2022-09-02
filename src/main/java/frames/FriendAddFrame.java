@@ -113,6 +113,7 @@ public class FriendAddFrame extends JFrame {
 
     private JPanel inputIdPanel() {
         JPanel panel = new JPanel();
+        panel.setOpaque(false);
         panel.setPreferredSize(new Dimension(0, 80));
         panel.add(inputIdField());
         return panel;
