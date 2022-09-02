@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.io.IOException;
 
@@ -35,13 +36,13 @@ public class FriendAddFrame extends JFrame {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(300, 420);
         this.setResizable(false);
-        this.setBackground(Color.darkGray);
         this.setLocationRelativeTo(null);
         this.add(addFriendPanel());
     }
 
     private JPanel addFriendPanel() {
         addFriendPanel = new JPanel();
+        addFriendPanel.setBackground(new Color(45,45,45));
         addFriendPanel.setLayout(new BorderLayout());
         addFriendPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20));
         addFriendPanel.add(addFriendMenuPanel(), BorderLayout.NORTH);
@@ -62,12 +63,15 @@ public class FriendAddFrame extends JFrame {
 
     private JLabel addFriendTitleLabel() {
         JLabel label = new JLabel("친구 추가");
+        label.setFont(new Font("Serif", Font.BOLD, 16));
+        label.setForeground(new Color(0xEFEBEB));
         label.setHorizontalAlignment(JLabel.CENTER);
         return label;
     }
 
     private JPanel friendRequestPanel() {
         JPanel panel = new JPanel();
+        panel.setOpaque(false);
         panel.setLayout(new GridLayout(1, 2));
         panel.add(addFriendByPhoneNumberButton());
         panel.add(addFriendByIdButton());
@@ -129,14 +133,9 @@ public class FriendAddFrame extends JFrame {
         return inputFriendsInformationPanel;
     }
 
-    private JPanel descriptionPanel(String description) {
-        JPanel panel = new JPanel();
-        panel.add(new JLabel(description));
-        return panel;
-    }
-
     private JPanel inputInformationPanel() {
         JPanel panel = new JPanel();
+        panel.setOpaque(false);
         panel.setPreferredSize(new Dimension(0, 80));
         panel.setLayout(new GridLayout(2, 1));
         panel.add(inputNameField());
@@ -154,6 +153,20 @@ public class FriendAddFrame extends JFrame {
         inputPhoneNumberField = new JTextField(10);
         inputPhoneNumberField.setText("전화 번호");
         return inputPhoneNumberField;
+    }
+
+    private JPanel descriptionPanel(String description) {
+        JPanel panel = new JPanel();
+        panel.setOpaque(false);
+        panel.add(descriptionLabel(description));
+        return panel;
+    }
+
+    private JLabel descriptionLabel(String description) {
+        JLabel label = new JLabel(description);
+        label.setForeground(new Color(0x9B9B9B));
+        label.setFont(new Font("Serif", Font.PLAIN, 10));
+        return label;
     }
 
     private JButton addFriendButton() {

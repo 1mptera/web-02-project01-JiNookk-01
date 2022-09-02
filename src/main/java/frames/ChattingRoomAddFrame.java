@@ -3,11 +3,13 @@ package frames;
 import models.ChattingRoom.ChattingRoom;
 import models.Invitation;
 import models.MakaoTalk;
+import models.Profile;
 import models.Relation.UsersRelation;
 import models.User;
 import utils.loader.ChattingRoomLoader;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -15,6 +17,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,7 +32,7 @@ public class ChattingRoomAddFrame extends JFrame {
 
     private JTextField searchFriendNameField;
 
-    public ChattingRoomAddFrame(MakaoTalk makaoTalk, String type) {
+    public ChattingRoomAddFrame(MakaoTalk makaoTalk, String type) throws IOException {
         this.makaoTalk = makaoTalk;
         invitations = initInvitations(makaoTalk);
         this.type = type;
@@ -49,8 +54,9 @@ public class ChattingRoomAddFrame extends JFrame {
         return invitations;
     }
 
-    private JPanel inviteContainer() {
+    private JPanel inviteContainer() throws IOException {
         JPanel panel = new JPanel();
+        panel.setBackground(new Color(45,45,45));
         panel.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20));
         panel.setLayout(new BorderLayout());
 
@@ -60,14 +66,16 @@ public class ChattingRoomAddFrame extends JFrame {
         return panel;
     }
 
-    private JPanel friendListPanel() {
+    private JPanel friendListPanel() throws IOException {
         JPanel panel = new JPanel();
+        panel.setOpaque(false);
         panel.add(friendListContainer());
         return panel;
     }
 
-    private JPanel friendListContainer() {
+    private JPanel friendListContainer() throws IOException {
         JPanel panel = new JPanel();
+        panel.setOpaque(false);
         panel.setLayout(new GridLayout(makaoTalk.relation().loginUserFriends().size(), 1));
 
         for (UsersRelation usersRelation : makaoTalk.relation().loginUserFriends()) {
@@ -83,15 +91,21 @@ public class ChattingRoomAddFrame extends JFrame {
         return panel;
     }
 
-    private JPanel friendPanel(User friend, Invitation invitation) {
+    private JPanel friendPanel(User friend, Invitation invitation) throws IOException {
         JPanel panel = new JPanel();
-        panel.add(friendCheckBox(friend, invitation));
-        panel.add(new JLabel("프사"));
+        panel.setPreferredSize(new Dimension(240,40));
+        panel.setOpaque(false);
+        panel.setLayout(new BorderLayout());
+        panel.add(friendCheckBox(friend, invitation),BorderLayout.WEST);
+        panel.add(profilePicture(friend),BorderLayout.EAST);
         return panel;
     }
 
     private JCheckBox friendCheckBox(User friend, Invitation invitation) {
         JCheckBox checkBox = new JCheckBox("   " + friend.name());
+        checkBox.setFont(new Font("Serif", Font.PLAIN, 12));
+        checkBox.setForeground(new Color(0xEFEBEB));
+        checkBox.setHorizontalAlignment(JCheckBox.LEFT);
         checkBox.addActionListener(event -> {
             if (checkBox.isSelected()) {
                 invitation.setChecked(true);
@@ -104,8 +118,19 @@ public class ChattingRoomAddFrame extends JFrame {
         return checkBox;
     }
 
+    private JLabel profilePicture(User friend) throws IOException {
+        ImageIcon profileIcon = friend.profile()
+                .picture().profilePicture(Profile.PROFILEWIDTH,Profile.PROFILEHEIGHT);
+
+        JLabel label = new JLabel(profileIcon);
+        label.setHorizontalAlignment(JLabel.RIGHT);
+        return label;
+    }
+
     private JPanel searchPanel() {
         JPanel panel = new JPanel();
+        panel.setOpaque(false);
+        panel.setLayout(new GridLayout(2,1));
         panel.add(inviteTitleLabel());
         panel.add(searchFriendNameField());
         return panel;
@@ -113,6 +138,8 @@ public class ChattingRoomAddFrame extends JFrame {
 
     private JLabel inviteTitleLabel() {
         JLabel label = new JLabel("대화상대 선택");
+        label.setFont(new Font("Serif", Font.BOLD, 14));
+        label.setForeground(new Color(0xEFEBEB));
         label.setHorizontalAlignment(JLabel.CENTER);
         return label;
     }
@@ -125,6 +152,7 @@ public class ChattingRoomAddFrame extends JFrame {
 
     private JPanel inviteButtonPanel() {
         JPanel panel = new JPanel();
+        panel.setOpaque(false);
         panel.add(exitButton());
         panel.add(inviteButton());
         return panel;

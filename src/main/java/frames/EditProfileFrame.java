@@ -11,7 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -21,7 +23,7 @@ import java.io.IOException;
 
 public class EditProfileFrame extends JFrame {
     private final User loginUser;
-    private MakaoTalk makaoTalk;
+    private final MakaoTalk makaoTalk;
     private JTextField nickNameField;
     private JTextField profileMessageField;
 
@@ -37,6 +39,7 @@ public class EditProfileFrame extends JFrame {
     private JPanel editProfilePanel() throws IOException {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
+        panel.setBackground(new Color(45,45,45));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         panel.add(titleAndProfilePicturePanel(), BorderLayout.NORTH);
         panel.add(editNameAndProfileMessagePanel());
@@ -46,6 +49,7 @@ public class EditProfileFrame extends JFrame {
 
     private JPanel titleAndProfilePicturePanel() throws IOException {
         JPanel panel = new JPanel();
+        panel.setOpaque(false);
         panel.setLayout(new BorderLayout());
         panel.setPreferredSize(new Dimension(0, 160));
         panel.add(titleLabel(), BorderLayout.NORTH);
@@ -55,6 +59,8 @@ public class EditProfileFrame extends JFrame {
 
     private JLabel titleLabel() {
         JLabel label = new JLabel("기본 프로필 편집");
+        label.setFont(new Font("Serif", Font.BOLD, 16));
+        label.setForeground(new Color(0xEFEBEB));
         label.setHorizontalAlignment(JLabel.CENTER);
         return label;
     }
@@ -83,6 +89,7 @@ public class EditProfileFrame extends JFrame {
 
     private JPanel editNameAndProfileMessagePanel() {
         JPanel panel = new JPanel();
+        panel.setOpaque(false);
         panel.setLayout(new GridLayout(2, 1));
         panel.add(userNickNameField());
         panel.add(profileMessageField());
@@ -109,15 +116,20 @@ public class EditProfileFrame extends JFrame {
 
     private JPanel editButtonPanel() {
         JPanel panel = new JPanel();
+        panel.setOpaque(false);
         panel.setLayout(new BorderLayout());
         panel.setPreferredSize(new Dimension(0, 130));
-        panel.add(new JPanel());
+
+        JPanel blankPanel = new JPanel();
+        blankPanel.setOpaque(false);
+        panel.add(blankPanel);
         panel.add(editButtonContainer(), BorderLayout.SOUTH);
         return panel;
     }
 
     private JPanel editButtonContainer() {
         JPanel panel = new JPanel();
+        panel.setOpaque(false);
         panel.setPreferredSize(new Dimension(250, 40));
         panel.add(editButton());
         panel.add(cancelButton());
