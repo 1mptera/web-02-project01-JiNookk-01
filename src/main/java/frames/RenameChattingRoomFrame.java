@@ -13,7 +13,7 @@ import java.awt.Font;
 import java.io.IOException;
 
 public class RenameChattingRoomFrame extends JFrame {
-    private ChattingRoom chattingRoom;
+    private final ChattingRoom chattingRoom;
     private JTextField renameField;
 
     public RenameChattingRoomFrame(ChattingRoom chattingRoom, JButton button) throws IOException {

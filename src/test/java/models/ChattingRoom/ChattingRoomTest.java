@@ -23,5 +23,34 @@ class ChattingRoomTest {
         assertEquals(invitedUsers, chattingRoom.invitedUsers());
     }
 
+    @Test
+    void updateTitle() {
+        ChattingRoom chattingRoom = new ChattingRoom(1, "title", List.of());
 
+        assertEquals("title", chattingRoom.title());
+
+        chattingRoom.updateTitle("Hi");
+
+        assertEquals("Hi", chattingRoom.title());
+    }
+
+    @Test
+    void updatePreviewMessage() {
+        ChattingRoom chattingRoom = new ChattingRoom(1, "title", List.of());
+
+        assertEquals("", chattingRoom.previewMessage());
+
+        chattingRoom.updatePreviewMessage("Hi");
+
+        assertEquals("Hi", chattingRoom.previewMessage());
+    }
+
+    @Test
+    void toCsvRow() {
+        ChattingRoom chattingRoom = new ChattingRoom(1, "title", List.of());
+
+        chattingRoom.updatePreviewMessage("Hi");
+
+        assertEquals("1/title/Hi/일반", chattingRoom.toCsvRow());
+    }
 }

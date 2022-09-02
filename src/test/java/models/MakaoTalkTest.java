@@ -145,8 +145,8 @@ class MakaoTalkTest {
                 new User(3, "oja", "ojw123", "배준형", "01085568965", new Profile(1, deleted))
         );
 
-        assertEquals("오진성,오진어", makaoTalk.newChatting(invitations).title());
-        assertEquals(invitedUsers, makaoTalk.newChatting(invitations).invitedUsers());
+        assertEquals("오진성,오진어", makaoTalk.newChatting(invitations,"일반").title());
+        assertEquals(invitedUsers, makaoTalk.newChatting(invitations,"일반").invitedUsers());
     }
 
     @Test

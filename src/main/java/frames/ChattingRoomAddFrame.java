@@ -16,23 +16,21 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChattingRoomAddFrame extends JFrame {
     private final MakaoTalk makaoTalk;
-    private SelectChattingFrame selectChattingFrame;
     private List<Invitation> invitations;
+    private String type;
 
     private JTextField searchFriendNameField;
 
-    public ChattingRoomAddFrame(MakaoTalk makaoTalk, SelectChattingFrame selectChattingFrame) {
+    public ChattingRoomAddFrame(MakaoTalk makaoTalk, String type) {
         this.makaoTalk = makaoTalk;
-        this.selectChattingFrame = selectChattingFrame;
         invitations = initInvitations(makaoTalk);
+        this.type = type;
 
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(300, 480);
@@ -141,7 +139,7 @@ public class ChattingRoomAddFrame extends JFrame {
 
             if (invitations.size() > 1) {
                 try {
-                    ChattingRoom newChattingRoom = makaoTalk.newChatting(invitationList);
+                    ChattingRoom newChattingRoom = makaoTalk.newChatting(invitationList,type);
 //
                     ChattingRoomLoader chattingRoomLoader = new ChattingRoomLoader();
 
@@ -153,7 +151,6 @@ public class ChattingRoomAddFrame extends JFrame {
                     chattingRoomWindow.setVisible(true);
 
                     dispose();
-                    selectChattingFrame.dispose();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

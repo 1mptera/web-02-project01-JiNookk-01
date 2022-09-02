@@ -55,7 +55,7 @@ class ParserTest {
     void parseChattingRoom() throws IOException {
         Parser parser = new Parser();
 
-        String line = "1/징성";
+        String line = "1/징성//일반";
         boolean deleted = false;
         List<User> users = List.of(
                 new User(1, "ojw0828", "7895123", "오진욱", "01085568965", new Profile(1, deleted)),

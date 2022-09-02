@@ -1,6 +1,5 @@
 package models.ChattingRoom;
 
-import models.Message;
 import models.User;
 
 import java.util.ArrayList;
@@ -13,6 +12,7 @@ public class ChattingRoom {
     private List<User> invitedUsers;
     private String title;
     private String previewMessage = "";
+    private final String type = "일반";
 
     public ChattingRoom(long id, String title, List<User> invitedUsers) {
         this.id = id;
@@ -36,12 +36,20 @@ public class ChattingRoom {
         return new ArrayList<>(invitedUsers);
     }
 
+    public String type() {
+        return type;
+    }
+
+    public void updateTitle(String newTitle) {
+        this.title = newTitle;
+    }
+
     public void updatePreviewMessage(String previewMessage) {
         this.previewMessage = previewMessage;
     }
 
     public String toCsvRow() {
-        return id + "/" + title + "/" + previewMessage;
+        return id + "/" + title + "/" + previewMessage + "/" + type;
     }
 
     @Override
@@ -54,9 +62,5 @@ public class ChattingRoom {
     @Override
     public String toString() {
         return "ID: " + id + ", 제목: " + title + ", 채팅방 유저: " + invitedUsers;
-    }
-
-    public void updateTitle(String newTitle) {
-        title = newTitle;
     }
 }

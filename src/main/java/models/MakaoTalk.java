@@ -1,6 +1,7 @@
 package models;
 
 import models.ChattingRoom.ChattingRoom;
+import models.ChattingRoom.SecretChatting;
 import models.Relation.Relation;
 import models.Relation.UserChattingRoomRelation;
 import utils.IDGenerator;
@@ -109,7 +110,7 @@ public class MakaoTalk {
         relation.updateloginUserId(loginUserId);
     }
 
-    public ChattingRoom newChatting(List<Invitation> invitations) throws FileNotFoundException {
+    public ChattingRoom newChatting(List<Invitation> invitations,String type) throws FileNotFoundException {
         Parser parser = new Parser();
 
         IDGenerator idGenerator = new IDGenerator();
@@ -119,6 +120,16 @@ public class MakaoTalk {
         List<User> invitedUsers = parser.parseInvitedUsers(invitations, users);
 
         String title = parser.parseChattingRoomTitle(invitedUsers);
+
+        if (type.equals("비밀")) {
+            ChattingRoom newChatting = new SecretChatting(id,title,invitedUsers);
+
+            addChattingRoom(newChatting);
+
+            relation.newUserChattingRoomRelations(newChatting);
+
+            return newChatting;
+        }
 
         ChattingRoom newChatting = new ChattingRoom(id,title,invitedUsers);
 

@@ -1,6 +1,7 @@
 package utils;
 
 import models.ChattingRoom.ChattingRoom;
+import models.ChattingRoom.SecretChatting;
 import models.Invitation;
 import models.Message;
 import models.Profile;
@@ -50,6 +51,7 @@ public class Parser {
         long id = Long.parseLong(words[0]);
         String title = words[1];
         String previewMessage = words[2];
+        String type = words[3];
 
         List<UserChattingRoomRelation> inviteds = userToChattingRoomRelations.stream()
                 .filter(userChattingRoomRelation -> userChattingRoomRelation.chattingRoomId() == id)
@@ -63,6 +65,12 @@ public class Parser {
                     invitedUser.add(user);
                 }
             }
+        }
+
+        if (type.equals("비밀")) {
+            ChattingRoom chattingRoom = new SecretChatting(id, title, invitedUser);
+            chattingRoom.updatePreviewMessage(previewMessage);
+            return chattingRoom;
         }
 
         ChattingRoom chattingRoom = new ChattingRoom(id, title, invitedUser);
